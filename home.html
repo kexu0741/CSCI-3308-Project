@@ -8,17 +8,50 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   	crossorigin=""/>
+   	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   	integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   	crossorigin=""></script>
+   	<style>
+   		#map {
+               position: absolute;
+               width: 80%;
+               height:100%;
+           }
+        #sideBar{
+            width: 20%;
+        }
+   	</style>
     <title>Disaster Tracker</title>
 </head>
 
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Disaster Tracker</a>
-        <form class="form-inline" style="position: absolute; right: 0;">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        <button class="btn btn-outline-success my-2 my-sm-0" style="position: absolute; right: 0;">Login</button>
     </nav>
+    <div id = "map"></div>
+    <div>
+            <form id ="sideBar" class="form-inline" style="position: absolute; right: 0;">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <P>
+                Key:
+            </P>
+        </div>
+	<script>
+		var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
+		L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
+			attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+		}).addTo(mymap);
+    mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
+		var marker = L.marker([40.0169, -105.2796]).addTo(mymap);
+		marker.bindPopup('<b>Weather info </b>');
+	</script>
 </body>
 
 </html>
