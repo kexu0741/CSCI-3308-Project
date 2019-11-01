@@ -1,0 +1,58 @@
+Mount Elbert,39.1178,-106.4454
+Mount Massive,39.1875,-106.4757
+Mount Harvard,38.9244,-106.3207
+Blanca Peak,37.5775,-105.4856
+La Plata Peak,39.0294,-106.4729
+Uncompahgre Peak,38.0717,-107.4621
+Crestone Peak,37.9669,-105.5855
+Mount Lincoln,39.3515,-106.1116
+Castle Peak,39.0097,-106.8614
+Grays Peak,39.6339,-105.8176
+Mount Antero,38.6741,-106.2462
+Torreys Peak,39.6428,-105.8212
+Quandary Peak,39.3973,-106.1064
+Mount Evans,39.5883,-105.6438
+Longs Peak,40.255,-105.6151
+Mount Wilson,37.8391,-107.9916
+Mount Shavano,38.6192,-106.2393
+Mount Princeton,38.7492,-106.2424
+Mount Belford,38.9607,-106.3607
+Crestone Needle,37.9647,-105.5766
+Mount Yale,38.8442,-106.3138
+Mount Bross,39.3354,-106.1077
+Kit Carson Mountain,37.9797,-105.6026
+Maroon Peak,39.0708,-106.98899999999999
+Tabeguache Peak,38.6255,-106.2509
+Mount Oxford (Colorado),38.9648,-106.3388
+Mount Sneffels,38.0038,-107.7923
+Mount Democrat,39.3396,-106.14
+Capitol Peak,39.1503,-107.0829
+Pikes Peak,38.8405,-105.0442
+Snowmass Mountain,39.1188,-107.0665
+Windom Peak,37.6212,-107.5919
+Mount Eolus,37.6218,-107.6227
+Challenger Point,37.9804,-105.6066
+Mount Columbia,38.9039,-106.2975
+Missouri Mountain,38.9476,-106.3785
+Humboldt Peak,37.9762,-105.5552
+Mount Bierstadt,39.5826,-105.6688
+Sunlight Peak,37.6274,-107.5959
+Handies Peak,37.913000000000004,-107.5044
+Culebra Peak,37.1224,-105.1858
+Ellingwood Point,37.5826,-105.4927
+Mount Lindsey,37.5837,-105.4449
+Little Bear Peak,37.5666,-105.4972
+Mount Sherman,39.225,-106.1699
+Redcloud Peak,37.941,-107.4219
+Pyramid Peak,39.0717,-106.9502
+Wilson Peak,37.8603,-107.9847
+San Luis Peak,37.9868,-106.9313
+Wetterhorn Peak,38.0607,-107.5109
+Mount of the Holy Cross,39.4668,-106.4817
+Huron Peak,38.9455,-106.4381
+Sunshine Peak,37.9228,-107.4256
+Mt. Cameron,39.347165000000004,-106.118501
+El Diente Peak,37.839383000000005,-108.005335
+Conundrum Peak,39.015682,-106.862749
+North Eolus,37.625192,-107.621187
+North Maroon Peak,39.076007000000004,-106.987058
