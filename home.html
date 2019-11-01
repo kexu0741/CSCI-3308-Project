@@ -26,22 +26,17 @@
    	</style>
     <title>Disaster Tracker</title>
 </head>
-
 <body>
-    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Disaster Tracker</a>
         <button class="btn btn-outline-success my-2 my-sm-0" style="position: absolute; right: 0;">Login</button>
     </nav>
     <div id = "map"></div>
-    <div>
+        <div>
             <form id ="sideBar" class="form-inline" style="position: absolute; right: 0;">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <P>
-                Key:
-            </P>
         </div>
 	<script>
 		var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
