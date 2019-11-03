@@ -19,7 +19,8 @@
    		#map {
                position: absolute;
                width: 80%;
-               height:100%;
+               height:100%;     
+               border: 1px solid black;
            }
         #sideBar{
             width: 20%;
@@ -39,15 +40,6 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
-	<script>
-		var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
-		L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
-			attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-		}).addTo(mymap);
-    mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
-		var marker = L.marker([40.0169, -105.2796]).addTo(mymap);
-		marker.bindPopup('<b>Weather info </b>');
-	</script>
 </body>
 
 </html>
