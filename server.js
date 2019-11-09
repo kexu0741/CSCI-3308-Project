@@ -1,16 +1,21 @@
-const express = require('express'); // Add the express framework has been added
+/*
+	-you can search for locations, and, if they are in the database, a new marker will be added to the map
+	-the first name and password fields in userprofiles will be saved to your database upon clicking the save button
+*/
+
+const express = require('express');
 let app = express();
 const pgp = require('pg-promise')();
-const bodyParser = require('body-parser'); // Add the body-parser tool has been added
-app.use(bodyParser.json());              // Add support for JSON encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encoded bodies
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const dbConfig = {
 	host: 'localhost',
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: 'M1ndB4Mouth'
+	password: 'password' // when testing, remember to change this to your password
 };
 
 let db = pgp(dbConfig);
@@ -18,46 +23,34 @@ let db = pgp(dbConfig);
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
-app.get('/home', function(req, res) {
+app.get('/home', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
 		my_title:"Home"
 	});
 });
 
-// app.post('/home/search', function(req, res, next) {
-//   res.render(__dirname + '/home.html',{
-// 	 	message: 'Hello World'
-// 	});
-// });
-
-app.get('/home/search', function(req, res) {
+app.get('/home/search', function(req, res) { // renders homepage with search query
 	var searchTerm = req.query.search;
 	console.log(req.query.search);
 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
 	console.log(query);
-	db.query(query)
+	db.query(query) // searches DB
 		.then(function(info) {
 			console.log(info[0]);
 			res.render(__dirname + "/home",{
 				my_title:"Home",
-				data:info[0]
+				data:info[0] // contains the results of the search
 		})
 	})
 })
 
-app.get('/userprofile', function(req, res) {
+app.get('/userprofile', function(req, res) { // renders userprofile page
 	res.render(__dirname + "/userprofile",{
 		my_title:"Login Page"
 	});
 });
 
-// app.get('/userprofile/register', function(req, res) {
-// 	res.render(__dirname + "/userprofile.html",{
-// 		my_title:"Login Page"
-// 	});
-// });
-
-app.post('/userprofile/register', function(req, res) {
+app.post('/userprofile/register', function(req, res) { // saves username and password to DB
 	res.status(204).send();
 	var body = req.body;
 	console.log(body);
