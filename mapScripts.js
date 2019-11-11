@@ -12,9 +12,9 @@ function loadData(){
 	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
 	///************************************************************** */
 	//var url = null;
-	var apiUrl = null;
+	var apiUrl = darkSkyAPIUrl;
 	if (apiUrl == null){
-		alert("Go to mapScripts.js and enter your darkSkys API url into the apiUrl field to load map. url must end in a backslash (/)");
+		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
 	var url = document.getElementById('latitudeInput').value +","+ document.getElementById('longitudeInput').value;
 	url = apiUrl+url;
