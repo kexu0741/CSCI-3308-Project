@@ -14,7 +14,7 @@
    	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
    	integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
        crossorigin=""></script>
-       <script src="mapScripts.js"></script>
+    <script type="text/javascript" src="mapScripts.js"></script>
    	<style>
    		#map {
                position: absolute;
@@ -35,9 +35,20 @@
     </nav>
     <div id = "map"></div>
         <div>
+            <!-----
             <form id ="sideBar" class="form-inline" style="position: absolute; right: 0;">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            ---->
+            <form id ="sideBar" class="form-inline" style="position: absolute; right: 0;">
+                    
+                <label for="latitudeInput">Latitude</label>
+                <input type="integer" class="form-control" id="latitudeInput" aria-describedby="emailHelp" value="40.0169">
+                
+                <label for="longitudeInput">Longitude</label>
+                <input type="integer" class="form-control" id="longitudeInput" value="-105.2796">
+                <button type="button" id="setLatLng" class="btn btn-primary" onclick="loadData();return false;">Search</button>
             </form>
         </div>
 </body>
