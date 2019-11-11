@@ -1,11 +1,21 @@
+var marker1 = {};
+
 window.onload = function(){
 	loadData();
 	
 }
 
+//loadData does not take any arguments. It gets weather data from the darksky api. This key only allows us
+//1000 class per day.
 function loadData(){
-	var url ='https://api.darksky.net/forecast/01488d2e3a2dadb78a720c0b557d7ecc/'+ document.getElementById('latitudeInput').value +","+ document.getElementById('longitudeInput').value;
-	
+	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
+	//var url = null;
+	var apiUrl = null;
+	if (apiUrl == null){
+		alert("Go to mapScripts.js and enter your darkSkys API url into the apiUrl field to load map. url must end in a backslash (/)");
+	}
+	var url = document.getElementById('latitudeInput').value +","+ document.getElementById('longitudeInput').value;
+	url = apiUrl+url;
 	$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
 		makeMap(data);
 	})
@@ -13,9 +23,11 @@ function loadData(){
 
 //makeMape takes one argument, data, and creates the map object as well as puts a marker onto it.
 function makeMap(data){
-	$("#parent_id").children(":not(#id_n)").remove();
+	var container = L.DomUtil.get('map');
+	if(container != null){
+        container._leaflet_id = null;
+    }
 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
-	console.log("after var");
 	L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
 		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
 	}).addTo(mymap);
@@ -68,10 +80,11 @@ function makeMap(data){
 	});
 
 	//making marker update based on lat/lng inputs
-	var marker = L.marker([document.getElementById('latitudeInput').value,document.getElementById('longitudeInput').value], {icon: redAlertIcon}).addTo(mymap);
+	 marker1 = L.marker([document.getElementById('latitudeInput').value,document.getElementById('longitudeInput').value], {icon: redAlertIcon}).addTo(mymap);
 
 	
-	marker.bindPopup('<h3>Weather info for (cityname)</h3>' 
+	marker1.bindPopup('<h3>Weather info for (cityname)</h3>' 
+					+ '<p>Entered latitude and longitude: '+ document.getElementById('latitudeInput').value +" "+ document.getElementById('longitudeInput').value +'</p>'
 					+ '<div class="card bg-light">'
 					+ '<ul class="list-group">'
 					+ 	"<li class = list-group-item>Current Temperature: " +data.currently.temperature+" </li>"
@@ -80,4 +93,18 @@ function makeMap(data){
 					+ '</ul>'
 					+ '</div>');
 	
+}
+
+//addMarker takes no arguments and adds a marker based off of the input in the latitude and longitude fielsa
+//on the main page.
+//THIS FUNCTION IS CURRENTLY NOT BEING USED.
+//This allows us to add more then one maker at a time, but for now I have it just move one marker around
+//the page.
+function addMarker(){
+	var container = L.DomUtil.get('map');
+	if(container != null){
+        container._leaflet_id = null;
+    }
+	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
+	marker1 = L.marker([document.getElementById('latitudeInput').value,document.getElementById('longitudeInput').value]).addTo(mymap);  
 }
