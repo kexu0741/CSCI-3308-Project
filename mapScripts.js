@@ -8,7 +8,9 @@ window.onload = function(){
 //loadData does not take any arguments. It gets weather data from the darksky api. This key only allows us
 //1000 class per day.
 function loadData(){
+	///*************************************************************** */
 	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
+	///************************************************************** */
 	//var url = null;
 	var apiUrl = null;
 	if (apiUrl == null){
