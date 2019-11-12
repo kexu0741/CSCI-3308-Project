@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/kexu0741/CSCI-3308-Project/issues"
   },
-  "homepage": "https://github.com/kexu0741/CSCI-3308-Project#readme"
+  "homepage": "https://github.com/kexu0741/CSCI-3308-Project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pg-promise": "^9.3.5",
+    "pug": "^2.0.4"
+  }
 }

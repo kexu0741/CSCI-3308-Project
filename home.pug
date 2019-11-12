@@ -7,39 +7,17 @@ head
   script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
   link(rel='stylesheet' href='https://unpkg.com/leaflet@1.5.1/dist/leaflet.css' integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==' crossorigin='')
-  script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
-  //script(src="mapScripts.js")
+  
+  script(type="text/javascript" src="../mapScripts.js")
   - if(data)
     - var ns_coordinate = data.ns_coordinate
     - var ew_coordinate = data.ew_coordinate
-    //- var locName = data.getString("location_name")
+    - var locName = data.location_name
   - else
     - var ns_coordinate = 0.0
     - var ew_coordinate = 0.0
-  script.
-    window.onload = function(){
-      var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
-      L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
-        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-      }).addTo(mymap);
-      var markers = [[40.0169, -105.2796, "Boulder"]];
-      if(#{ns_coordinate} + #{ew_coordinate} != 0){
-        markers[markers.length] = [#{ns_coordinate}, #{ew_coordinate}]
-      }
-      console.log(markers);
-      mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
-      for(var i = 0; i < markers.length; i++){
-        var marker = L.marker([markers[i][0], markers[i][1]]).addTo(mymap);
-        marker.bindPopup('<h3>Weather info for (cityname)</h3>'
-                + '<div class="card bg-light">'
-                + '<ul class="list-group">'
-                + 	'<li class = list-group-item>Current Temperature: </li>'
-                +	'<li class = list-group-item>Feels Like: </li>'
-                + 	'<li class = list-group-item>Current Conditions: </li>'
-                + '</ul>'
-                + '</div>');
-      }
-    }
+    - var locName = ""
+  
   style.
     #map {
     position: absolute;
@@ -57,7 +35,43 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
     a(href='../userprofile') Login
 #map
 div
+  script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
   form#sideBar.form-inline(action='/home/search' method='get' style='position: absolute; right: 0;')
     input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
     button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+
+script.
+  //const name = #{locName};
+  //console.log(#{locName});
+  //- console.log(displayName);
+  //- var name = #{locName}.constructor.name;
+  //- console.log(name);
+  //- console.log(typeof name);
+  //- for(var i=0;i<#{locName}.length;i++){
+  //-   name += JSON.stringify(#{locName}[i];
+  //- }
+  window.onload = makeMap(#{ns_coordinate}, #{ew_coordinate}, name);
+      //- /* window.onload = function(){
+      //-   var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
+      //-   L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
+      //-     attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+      //-   }).addTo(mymap);
+      //-   var markers = [[40.0169, -105.2796, "Boulder"]];
+      //-   if(#{ns_coordinate} + #{ew_coordinate} != 0){
+      //-     markers[markers.length] = [#{ns_coordinate}, #{ew_coordinate}]
+      //-   }
+      //-   console.log(markers);
+      //-   mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
+      //-   for(var i = 0; i < markers.length; i++){
+      //-     var marker = L.marker([markers[i][0], markers[i][1]]).addTo(mymap);
+      //-     marker.bindPopup('<h3>Weather info for (cityname)</h3>'
+      //-             + '<div class="card bg-light">'
+      //-             + '<ul class="list-group">'
+      //-             + 	'<li class = list-group-item>Current Temperature: </li>'
+      //-             +	'<li class = list-group-item>Feels Like: </li>'
+      //-             + 	'<li class = list-group-item>Current Conditions: </li>'
+      //-             + '</ul>'
+      //-             + '</div>');
+      //-   }
+      //- }*/
 s

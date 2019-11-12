@@ -15,7 +15,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: 'password' // when testing, remember to change this to your password
+	password: 'M1ndB4Mouth' // when testing, remember to change this to your password
 };
 
 let db = pgp(dbConfig);
@@ -37,9 +37,11 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 	db.query(query) // searches DB
 		.then(function(info) {
 			console.log(info[0]);
+			console.log(info[0].location_name);
 			res.render(__dirname + "/home",{
 				my_title:"Home",
-				data:info[0] // contains the results of the search
+				data:info[0], // contains the results of the search
+				locationName: info[0].location_name
 		})
 	})
 })
