@@ -21,7 +21,7 @@
 // 						+ '</div>');
 // 	}
 // }
-function makeMap(lat, long, locName){
+function makeMap(lat, long){ //, locName){
 	var container = L.DomUtil.get('map');
 	if(container != null){
         container._leaflet_id = null;
@@ -33,7 +33,7 @@ function makeMap(lat, long, locName){
 	}).addTo(mymap);
 	var markers = [[40.0169, -105.2796, "Boulder"]];
 	if(lat + long != 0){
-		markers[markers.length] = [lat, long, locName];
+		markers[markers.length] = [lat, long] //, locName];
 	}
 	console.log(markers);
 	mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in

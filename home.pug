@@ -41,7 +41,7 @@ div
     button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
 
 script.
-  //const name = #{locName};
+  //var name = #{locName};
   //console.log(#{locName});
   //- console.log(displayName);
   //- var name = #{locName}.constructor.name;
@@ -50,7 +50,7 @@ script.
   //- for(var i=0;i<#{locName}.length;i++){
   //-   name += JSON.stringify(#{locName}[i];
   //- }
-  window.onload = makeMap(#{ns_coordinate}, #{ew_coordinate}, name);
+  window.onload = makeMap(#{ns_coordinate}, #{ew_coordinate});
       //- /* window.onload = function(){
       //-   var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
       //-   L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
