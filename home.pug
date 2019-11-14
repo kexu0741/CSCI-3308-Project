@@ -9,6 +9,7 @@ head
   link(rel='stylesheet' href='https://unpkg.com/leaflet@1.5.1/dist/leaflet.css' integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==' crossorigin='')
   script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
   script(src="../mapScripts.js" )
+  script(src="../key.js")
   - if(data)
     - var ns_coordinate = data.ns_coordinate
     - var ew_coordinate = data.ew_coordinate
@@ -33,9 +34,17 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
     a(href='../userprofile') Login
 #map
 div
-  form#sideBar.form-inline(action='/home/search' method='get' style='position: absolute; right: 0;')
-    input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
-    button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
-    script.
-      window.onload = loadData(#{ns_coordinate}, #{ew_coordinate});
+  container
+    form#sideBar.form-inline(action='/home/search' method='get' style='position: absolute; right: 0;')
+      input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
+      button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+      script.
+        window.onload = loadData(#{ns_coordinate}, #{ew_coordinate});
+    form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
+      label(for='latitudeInput') Latitude
+      input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')
+      label(for='longitudeInput') Longitude
+      input#longitudeInput.form-control(type='integer' placeholder='Long')
+      button#setLatLng.btn.btn-primary(type='button' onclick='loadData(181,181);return false;' style='margin-top: 2%;') Search
+
 s

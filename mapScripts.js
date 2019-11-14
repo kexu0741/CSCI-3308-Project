@@ -3,40 +3,25 @@ function loadData(lat, long){
 	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
 	///************************************************************** */
 	//var url = null;
-	//var apiUrl = darkSkyAPIUrl;
-	var apiUrl = "https://api.darksky.net/forecast/56cfb34193238efd3d3d6a20ac5afc24/";
+	var apiUrl = darkSkyAPIUrl;
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
-	var url = lat +","+ long;
-	url = apiUrl+url;
-	$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
-		makeMap(data, lat, long);
-	})
+	if (lat + long == 362){
+		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
+		// url = apiUrl+url;
+		addMarker();
+	}
+	else{
+		var url = lat +","+ long;
+		url = apiUrl+url;
+		$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
+			makeMap(data, lat, long);
+		})
+	}
 }
 
 function makeMap(data, lat, long){
-	// var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
-	// L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
-	// 	attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-	// }).addTo(mymap);
-	// var markers = [[40.0169, -105.2796, "Boulder"]];
-	// if(lat + long != 0){
-	// 	markers[markers.length] = [lat, long];
-	// }
-	// console.log(markers);
-	// mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
-	// for(var i = 0; i < markers.length; i++){
-	// 	var marker = L.marker([markers[i][0], markers[i][1]]).addTo(mymap);
-	// 	marker.bindPopup('<h3>Weather info for ' + markers[i][2] + '</h3>'
-	// 					+ '<div class="card bg-light">'
-	// 					+ '<ul class="list-group">'
-	// 					+ 	'<li class = list-group-item>Current Temperature: </li>'
-	// 					+	'<li class = list-group-item>Feels Like: </li>'
-	// 					+ 	'<li class = list-group-item>Current Conditions: </li>'
-	// 					+ '</ul>'
-	// 					+ '</div>');
-	// }
 	console.log(lat, long);
 	var container = L.DomUtil.get('map');
 	if(container != null){
@@ -114,7 +99,6 @@ function makeMap(data, lat, long){
 	var currIcon; // var storing the current icon
 	var currWeather = data.currently.icon; // var storing the current weather conditions
 	console.log(data);
-	console.log(currWeather);
 
 	// matching the current weather to the respective icon
 	if(currWeather.includes('clear')){
@@ -151,4 +135,13 @@ function makeMap(data, lat, long){
 					+ '</ul>'
 					+ '</div>');
 
+}
+
+function addMarker(){
+	var container = L.DomUtil.get('map');
+	if(container != null){
+        container._leaflet_id = null;
+    }
+	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
+	marker1 = L.marker([document.getElementById('latitudeInput').value,document.getElementById('longitudeInput').value]).addTo(mymap);
 }
