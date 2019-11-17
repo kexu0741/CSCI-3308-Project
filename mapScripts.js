@@ -1,3 +1,65 @@
+
+function getIcons(){
+	var icons = [];
+
+	icons[0] = L.icon({
+		iconUrl:'../img/sunny.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [15, 30]
+	});
+
+	icons[1] = L.icon({
+		iconUrl: '../img/clearnight.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [15,30]
+	});
+
+	icons[2] = L.icon({ // TODO: find new image
+		iconUrl:'../img/cloudy.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [22, 40]
+	});
+
+	icons[3]= L.icon({
+		iconUrl:'../img/rain.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [15, 30]
+	});
+
+	icons[4] = L.icon({ // TODO: find new image
+		iconUrl:'../img/snow.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [15, 35]
+	});
+
+	icons[5] = L.icon({
+		iconUrl:'../img/thunderstorm.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [15, 28]
+	});
+
+	icons[6] = L.icon({ // TODO: find new image
+		iconUrl:'../img/alert.png',
+
+		iconSize: [30, 30],
+		iconAnchor: [22, 40]
+	});
+
+	icons[7] = L.icon({ //
+		iconUrl:'../img/redalert.png',
+
+		iconSize: [20, 20],
+		iconAnchor: [10, 5]
+	});
+	return icons;
+}
+
 function loadData(lat, long){
 	///*************************************************************** */
 	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
@@ -13,16 +75,17 @@ function loadData(lat, long){
 		addMarker();
 	}
 	else{
+		var icons = getIcons();
 		var url = lat +","+ long;
 		url = apiUrl+url;
 		$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
-			makeMap(data, lat, long);
+			makeMap(data, lat, long, icons);
 		})
 	}
 }
 
-function makeMap(data, lat, long){
-	console.log(lat, long);
+function makeMap(data, lat, long, icons){
+	console.log(icons);
 	var container = L.DomUtil.get('map');
 	if(container != null){
         container._leaflet_id = null;
@@ -40,61 +103,6 @@ function makeMap(data, lat, long){
 	// icon anchor: where on the icon which corresponds to icon location
 	// todo: fix the icons covering the city names
 
-	var sunnyIcon = L.icon({
-		iconUrl:'../img/sunny.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [15, 30]
-	});
-
-	var clearNightIcon = L.icon({
-		iconUrl: '../img/clearnight.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [15,30]
-	})
-
-	var cloudyIcon = L.icon({ // TODO: find new image
-		iconUrl:'../img/cloudy.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [22, 40]
-	});
-
-	var rainyIcon = L.icon({
-		iconUrl:'../img/rain.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [15, 30]
-	});
-
-	var snowyIcon = L.icon({ // TODO: find new image
-		iconUrl:'../img/snow.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [15, 35]
-	});
-
-	var stormIcon = L.icon({
-		iconUrl:'../img/thunderstorm.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [15, 28]
-	});
-
-	var alertIcon = L.icon({ // TODO: find new image
-		iconUrl:'../img/alert.png',
-
-		iconSize: [30, 30],
-		iconAnchor: [22, 40]
-	});
-
-	var redAlertIcon = L.icon({ //
-		iconUrl:'../img/redalert.png',
-
-		iconSize: [20, 20],
-		iconAnchor: [10, 5]
-	});
 
 	var currIcon; // var storing the current icon
 	var currWeather = data.currently.icon; // var storing the current weather conditions
@@ -103,20 +111,20 @@ function makeMap(data, lat, long){
 	// matching the current weather to the respective icon
 	if(currWeather.includes('clear')){
 		if(currWeather.includes('day')){
-			currIcon = sunnyIcon;
+			currIcon = icons[0];
 		}
 		else if(currWeather.includes('night')){
-			currIcon = clearNightIcon;
+			currIcon = icons[1];
 		}
 	}
 	else if(currWeather.includes('cloudy')){
-		currIcon = cloudyIcon;
+		currIcon = icons[2];
 	}
 	else if(currWeather.includes('rain')){
-		currIcon = rainyIcon;
+		currIcon = icons[3];
 	}
 	else if(currWeahter.includes('storm')){
-		currIcon = stormIcon;
+		currIcon = icons[5];
 	}
 
 	//console.log(currIcon.iconUrl);
@@ -124,8 +132,9 @@ function makeMap(data, lat, long){
 	var marker1 = L.marker([lat,long], {icon: currIcon}).addTo(mymap);
 	//marker1.addTo(mymap);
 
+	var locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
 
-	marker1.bindPopup('<h3>Weather info for (cityname)</h3>'
+	marker1.bindPopup('<h3>Weather info for ' + locName + '</h3>'
 					+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
 					+ '<div class="card bg-light">'
 					+ '<ul class="list-group">'
