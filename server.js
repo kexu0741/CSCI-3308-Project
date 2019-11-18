@@ -50,15 +50,43 @@ app.get('/userprofile', function(req, res) { // renders userprofile page
 	});
 });
 
-app.post('/userprofile/register', function(req, res) { // saves username and password to DB
+app.post('/userprofile/register', function(req, res) { // saves user info to DB
 	res.status(204).send();
 	var body = req.body;
 	console.log(body);
-	var insert_user = "INSERT INTO user_profiles(username, password)VALUES('";
-	insert_user += body.first_name + "','" + body.password + "') ON CONFLICT DO NOTHING;";
-	db.query(insert_user, (err,res)=>{
-		console.log(err,res)
+	var insert_user = "INSERT INTO users(first_name,last_name,phone,mobile,email,password)VALUES('";
+	var location_check = "SELECT id FROM locations WHERE location_name = '" + body.location + "';";
+	insert_user += body.first_name + "','" + body.last_name + "','" + body.phone  + "','" + body.mobile + "','" + body.email + "','" + body.password + "') ON CONFLICT DO NOTHING;";
+	db.task('get-everything', task => {
+			return task.batch([
+					task.any(insert_user),
+					task.any(location_check)
+			]);
+	})
+	.then(data => {
+		var id = data[1][0].id;
+		if(id){
+			var insert_location = "UPDATE users SET locations = ARRAY_APPEND(locations," + id + ") WHERE email = '" + body.email + "';";
+			console.log(insert_location);
+			db.query(insert_location)
+		}
 	})
 });
+
+app.get('/login', function(req, res) { // renders userprofile page
+	res.render(__dirname + "/login",);
+});
+
+app.post('/home/user_loc', function(req, res) {
+	console.log(req.body);
+	var get_locations = "SELECT locations FROM users WHERE email = '" + req.body.usrname + "';";
+	db.query(get_locations)
+		.then(function(info) {
+			var locations = info[0].locations;
+			res.render(__dirname + '/home',{
+				user_locations: locations
+			});
+		})
+})
 
 app.listen('3000');

@@ -60,7 +60,7 @@ function getIcons(){
 	return icons;
 }
 
-function loadData(lat, long){
+function loadData(lat, long, locations){
 	///*************************************************************** */
 	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
 	///************************************************************** */
@@ -69,6 +69,9 @@ function loadData(lat, long){
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
+
+	console.log(locations);
+
 	if (lat + long == 362){
 		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
 		// url = apiUrl+url;
