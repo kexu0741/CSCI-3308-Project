@@ -15,7 +15,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: 'M1ndB4Mouth' // when testing, remember to change this to your password
+	password: 'Listen420' // when testing, remember to change this to your password
 };
 
 let db = pgp(dbConfig);
