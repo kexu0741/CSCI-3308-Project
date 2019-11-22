@@ -66,7 +66,7 @@ function loadData(lat, long, locations, apiKey){
 	///************************************************************** */
 	//var url = null;
 	//var apiUrl = darkSkyAPIUrl;
-	var apiUrl = apiKey;
+	var apiUrl = apiKey.toString();
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}

@@ -43,7 +43,7 @@ div
       input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
       script.
-        window.onload = loadData(#{ns_coordinate}, #{ew_coordinate}, #{locations}, #{api_key});
+        window.onload = loadData(#{ns_coordinate}, #{ew_coordinate}, #{locations},#{api_key});
     form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
       label(for='latitudeInput') Latitude
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')
