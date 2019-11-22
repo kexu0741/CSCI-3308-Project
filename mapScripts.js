@@ -67,14 +67,15 @@ function loadData(lat, long, locations, apiKey){
 	//var url = null;
 	//var apiUrl = darkSkyAPIUrl;
 	var apiUrl = apiKey.toString();
+	console.log(apiUrl);
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
 
 	if (lat + long == 362){
-		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
-		// url = apiUrl+url;
-		addMarker(apiUrl);
+		var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
+		url = apiUrl+url;
+		addMarker(url);
 	}
 	else{
 		var icons = getIcons();
