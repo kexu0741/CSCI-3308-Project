@@ -26,7 +26,7 @@ const dbConfig = {
 let db = pgp(dbConfig);
 
 app.set('view engine', 'pug');
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/'));
 
 app.get('/home', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
@@ -42,6 +42,7 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 		.then(function(info) {
 			res.render(__dirname + "/home",{
 				my_title:"Home",
+				api_key: process.env.kevAPIkey,
 				data:info[0] // contains the results of the search
 		})
 	})
@@ -89,4 +90,4 @@ app.post('/home/user_loc', function(req, res) {
 		})
 })
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 3000);

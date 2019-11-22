@@ -60,22 +60,22 @@ function getIcons(){
 	return icons;
 }
 
-function loadData(lat, long, locations, apiKey){
+function loadData(lat, long, locations, apiUrl){
 	///*************************************************************** */
 	//apiUrl FIELD HERE> ENTER YOUR API URL IN KEY.JS FILE.
 	///************************************************************** */
 	//var url = null;
 	//var apiUrl = darkSkyAPIUrl;
-	var apiUrl = apiKey.toString();
+	//var url = apiUrl.toString();
 	console.log(apiUrl);
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
 
 	if (lat + long == 362){
-		var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
-		url = apiUrl+url;
-		addMarker(url);
+		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
+		// url = apiUrl+url;
+		addMarker(apiUrl);
 	}
 	else{
 		var icons = getIcons();
@@ -150,7 +150,7 @@ function makeMap(data, lat, long, icons, city){
 }
 
 //addMarker adds a marker to the map nbased on latatude and longitude
-function addMarker(apiKey){
+function addMarker(key){
 	var container = L.DomUtil.get('map'); //get map comtainer
 	if(container != null){ 
         container._leaflet_id = null; //remove map if map exists
@@ -158,7 +158,7 @@ function addMarker(apiKey){
 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8); //make map view
 	lat = document.getElementById('latitudeInput').value;
 	lng = document.getElementById('longitudeInput').value;	
-	var apiUrl = apiKey; // get API url
+	var apiUrl = key; // get API url
 	var icons = getIcons(); //get icons for map
 	var url = lat +","+ lng;
 	url = apiUrl+url;
