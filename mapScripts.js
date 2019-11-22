@@ -62,7 +62,7 @@ function getIcons(){
 
 function loadData(lat, long, locations){
 	///*************************************************************** */
-	//apiUrl FIELD HERE> ENTER YOUR API URL WHERE IT SAYS NULL.
+	//apiUrl FIELD HERE> ENTER YOUR API URL IN KEY.JS FILE.
 	///************************************************************** */
 	//var url = null;
 	var apiUrl = darkSkyAPIUrl;
@@ -82,12 +82,15 @@ function loadData(lat, long, locations){
 		var url = lat +","+ long;
 		url = apiUrl+url;
 		$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
-			makeMap(data, lat, long, icons);
+			console.log(data);
+			makeMap(data, lat, long, icons, "set");
 		})
 	}
 }
 
-function makeMap(data, lat, long, icons){
+//makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude, 
+//icons - from getIcons, and city - if there is a city name expected or not (set to "set" if expected)
+function makeMap(data, lat, long, icons, city){
 	console.log(icons);
 	var container = L.DomUtil.get('map');
 	if(container != null){
@@ -134,9 +137,11 @@ function makeMap(data, lat, long, icons){
 	//making marker update based on lat/lng inputs
 	var marker1 = L.marker([lat,long], {icon: currIcon}).addTo(mymap);
 	//marker1.addTo(mymap);
-
-	var locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
-
+	var locName = city;
+	if (city == "set"){
+		locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
+	} 
+	//make maker for page
 	marker1.bindPopup('<h3>Weather info for ' + locName + '</h3>'
 					+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
 					+ '<div class="card bg-light">'
@@ -149,11 +154,25 @@ function makeMap(data, lat, long, icons){
 
 }
 
+//addMarker adds a marker to the map nbased on latatude and longitude
 function addMarker(){
-	var container = L.DomUtil.get('map');
-	if(container != null){
-        container._leaflet_id = null;
-    }
-	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
-	marker1 = L.marker([document.getElementById('latitudeInput').value,document.getElementById('longitudeInput').value]).addTo(mymap);
+	var container = L.DomUtil.get('map'); //get map comtainer
+	if(container != null){ 
+        container._leaflet_id = null; //remove map if map exists
+	}
+	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8); //make map view
+	lat = document.getElementById('latitudeInput').value;
+	lng = document.getElementById('longitudeInput').value;	
+	var apiUrl = darkSkyAPIUrl; // get API url
+	var icons = getIcons(); //get icons for map
+	var url = lat +","+ lng;
+	console.log(url);
+	url = apiUrl+url;
+	//get map data and pass it so a pin can be made
+	$.ajax({url:url, dataType:"jsonp"}).then(function(data) { 
+		city = lat + ", " + lng;
+		makeMap(data, lat, lng, icons, city);
+	})
 }
+
+

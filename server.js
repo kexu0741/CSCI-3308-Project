@@ -9,13 +9,14 @@ const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+globalVariable = {};
 
 const dbConfig = {
 	host: 'localhost',
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: 'M1ndB4Mouth' // when testing, remember to change this to your password
+	password: "" // when testing, remember to change this to your password and remove before commit
 };
 
 let db = pgp(dbConfig);
