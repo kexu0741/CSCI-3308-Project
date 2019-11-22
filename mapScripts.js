@@ -74,7 +74,7 @@ function loadData(lat, long, locations, apiKey){
 	if (lat + long == 362){
 		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
 		// url = apiUrl+url;
-		addMarker();
+		addMarker(apiUrl);
 	}
 	else{
 		var icons = getIcons();
@@ -125,7 +125,7 @@ function makeMap(data, lat, long, icons, city){
 	else if(currWeather.includes('rain')){
 		currIcon = icons[3];
 	}
-	else if(currWeahter.includes('storm')){
+	else if(currWeather.includes('storm')){
 		currIcon = icons[5];
 	}
 
@@ -149,7 +149,7 @@ function makeMap(data, lat, long, icons, city){
 }
 
 //addMarker adds a marker to the map nbased on latatude and longitude
-function addMarker(){
+function addMarker(apiKey){
 	var container = L.DomUtil.get('map'); //get map comtainer
 	if(container != null){ 
         container._leaflet_id = null; //remove map if map exists
@@ -157,7 +157,7 @@ function addMarker(){
 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8); //make map view
 	lat = document.getElementById('latitudeInput').value;
 	lng = document.getElementById('longitudeInput').value;	
-	var apiUrl = darkSkyAPIUrl; // get API url
+	var apiUrl = apiKey; // get API url
 	var icons = getIcons(); //get icons for map
 	var url = lat +","+ lng;
 	url = apiUrl+url;
