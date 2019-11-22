@@ -60,13 +60,13 @@ function getIcons(){
 	return icons;
 }
 
-function loadData(lat, long, locations){
+function loadData(lat, long, locations, apiKey){
 	///*************************************************************** */
 	//apiUrl FIELD HERE> ENTER YOUR API URL IN KEY.JS FILE.
 	///************************************************************** */
 	//var url = null;
 	//var apiUrl = darkSkyAPIUrl;
-	var apiUrl = key;
+	var apiUrl = apiKey;
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
