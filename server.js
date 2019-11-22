@@ -11,17 +11,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 globalVariable = {};
 
-const dbConfig = {
-	host: 'localhost',
-	port: 5432,
-	database: 'disaster_tracker',
-	user: 'postgres',
-// <<<<<<< HEAD
-	password: 'Listen420' // when testing, remember to change this to your password
-// =======
-// 	password: "" // when testing, remember to change this to your password and remove before commit
-// >>>>>>> 5bebb820d8e23b1a77dae0ac6bc3be31d659d655
-};
+// const dbConfig = { 
+// 	host: 'localhost', // change this to be compatible w heroku
+// 	port: 5432,
+// 	database: 'disaster_tracker',
+// 	user: 'postgres',
+// // <<<<<<< HEAD
+// 	password: 'Listen420' // when testing, remember to change this to your password
+// // =======
+// // 	password: "" // when testing, remember to change this to your password and remove before commit
+// // >>>>>>> 5bebb820d8e23b1a77dae0ac6bc3be31d659d655
+// };
+const dbConfig = process.env.DATABASE_URL;
 
 let db = pgp(dbConfig);
 
