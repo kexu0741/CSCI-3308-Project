@@ -10,7 +10,6 @@ head
   script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
   //- script(src="../keys.js")
   script(src="../mapScripts.js" )
-  - console.log("here")
 
   - if(data)
     - var ns_coordinate = data.ns_coordinate
@@ -18,15 +17,15 @@ head
   - else
     - var ns_coordinate = 0.0
     - var ew_coordinate = 0.0
-    - console.log("entered1")
+    - alert("entered1")
   
-   
+
   - if(user_locations)
     - var locations = user_locations
     - console.log("entered2")
   - else
     - var locations = [];
-    - console.log("entered3")
+    - alert("entered3")
 
   style.
     #map {
