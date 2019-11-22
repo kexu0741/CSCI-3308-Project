@@ -26,7 +26,7 @@ const dbConfig = {
 let db = pgp(dbConfig);
 
 app.set('view engine', 'pug');
-app.use(express.static(__dirname + '/'));
+app.use(express.static(__dirname));
 
 app.get('/home', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
