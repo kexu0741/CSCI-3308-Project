@@ -21,6 +21,10 @@ head
     - var locations = user_locations
   - else
     - var locations = [];
+  - if(api_key)
+    - var key = {api_key}
+  - else
+    - var key = ""
   style.
     #map {
     position: absolute;
@@ -49,6 +53,7 @@ div
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')
       label(for='longitudeInput') Longitude
       input#longitudeInput.form-control(type='integer' placeholder='Long')
+      //loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
       button#setLatLng.btn.btn-primary(type='button' onclick='loadData(181,181);return false;' style='margin-top: 2%;') Search
 
 s
