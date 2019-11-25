@@ -1,4 +1,3 @@
-
 function getIcons(){
 	var icons = [];
 
@@ -67,7 +66,6 @@ function loadData(lat, long, locations, apiUrl){
 	//var url = null;
 	//var apiUrl = darkSkyAPIUrl;
 	//var url = apiUrl.toString();
-	console.log(apiUrl);
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
@@ -75,6 +73,7 @@ function loadData(lat, long, locations, apiUrl){
 	if (lat + long == 362){
 		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
 		// url = apiUrl+url;
+		console.log('apiUrl');
 		addMarker(apiUrl);
 	}
 	else{
@@ -110,6 +109,7 @@ function makeMap(data, lat, long, icons, city){
 
 	var currIcon; // var storing the current icon
 	var currWeather = data.currently.icon; // var storing the current weather conditions
+	console.log("currWeather: " + currWeather);
 
 	// matching the current weather to the respective icon
 	if(currWeather.includes('clear')){
@@ -126,6 +126,9 @@ function makeMap(data, lat, long, icons, city){
 	else if(currWeather.includes('rain')){
 		currIcon = icons[3];
 	}
+	else if(currWeather.includes('snow')){
+		currIcon = icons[4];
+	}
 	else if(currWeather.includes('storm')){
 		currIcon = icons[5];
 	}
@@ -135,7 +138,7 @@ function makeMap(data, lat, long, icons, city){
 	var locName = city;
 	if (city == "set"){
 		locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
-	} 
+	}
 	//make maker for page
 	marker1.bindPopup('<h3>Weather info for ' + locName + '</h3>'
 					+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
