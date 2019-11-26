@@ -11,20 +11,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 globalVariable = {};
 
-// const dbConfig = { 
-// 	host: 'localhost', // change this to be compatible w heroku
-// 	port: 5432,
-// 	database: 'disaster_tracker',
-// 	user: 'postgres',
-// // <<<<<<< HEAD
-// 	password: 'Listen420' // when testing, remember to change this to your password
-// // =======
-// // 	password: "" // when testing, remember to change this to your password and remove before commit
-// // >>>>>>> 5bebb820d8e23b1a77dae0ac6bc3be31d659d655
-// };
-
-//const dbConfig = process.env.DATABASE_URL;
-//console.log(dbConfig);
 
 const dbConfig = {
 	connectionString: process.env.DATABASE_URL,
@@ -37,15 +23,15 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
 app.get('/home', function(req, res) { // renders homepage
-	var query = "SELECT * FROM locations WHERE location_name = 'Boulder';";
-	console.log("Query: " + query);
+	var query = "SELECT * FROM locations WHERE location_name = 'Boulder' OR location_name = 'Denver';";
 	db.query(query)
 		.then(function(info){
+			console.log(info);
 			res.render(__dirname + "/home",{
 				my_title:"Home",
 				api_key: process.env.kevinAPIkey,
-				data: info[0],
-				user_locations: info[0].location_name
+				data: info
+				// user_locations: info
 			});
 		})
 });
@@ -55,11 +41,13 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
 	db.query(query) // searches DB
 		.then(function(info) {
+			console.log("info: " + info[0].location_name);
 			res.render(__dirname + "/home",{
 				my_title:"Home",
 				api_key: process.env.kevinAPIkey,
-				data:info[0] // contains the results of the search
-			})
+				data:info, // contains the results of the search
+				user_locations: JSON.stringify(info[0].location_name)
+			});
 		})
 })
 

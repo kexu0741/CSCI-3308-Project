@@ -12,16 +12,30 @@ head
   script(src="../mapScripts.js" )
 
   - if(data)
-    - var ns_coordinate = data.ns_coordinate
-    - var ew_coordinate = data.ew_coordinate
+    // - var ns_coordinate = data.ns_coordinate
+    // - var ew_coordinate = data.ew_coordinate
+    - var ns_coordinates = []
+    - var ew_coordinates = []
+    - var locations = []
+
+    - for(let i = 0; i < data.length; i++) {
+      - ns_coordinates[i] = data[i].ns_coordinate
+      - ew_coordinates[i] = data[i].ew_coordinate
+      - let temp = data[i].location_name
+      - locations[i] = temp
+    - }
   - else
     - var ns_coordinate = 0.0
     - var ew_coordinate = 0.0 
-
+    - var locations = []
+  
   - if(user_locations)
-    - var locations = user_locations
+    - var locations = []
+    - var temp = user_locations.toString()
+    - locations[0] = temp
   - else
-    - var locations = [];
+    - var locations = []
+ 
 
   style.
     #map {
@@ -45,7 +59,7 @@ div
       input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
       script.
-        window.onload = loadData(#{ns_coordinate}, #{ew_coordinate}, "#{locations}", "#{api_key}");
+        window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], ["#{locations}"], "#{api_key}");
     form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
       label(for='latitudeInput') Latitude
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')

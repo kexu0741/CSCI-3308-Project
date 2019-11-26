@@ -1,4 +1,9 @@
 function getIcons(){
+	// different icons for the different weather types
+	// iconurl: path to icon image
+	// iconSize: size of icon image on map
+	// icon anchor: where on the icon which corresponds to icon location
+	// todo: fix the icons covering the city names
 	var icons = [];
 
 	icons[0] = L.icon({
@@ -59,36 +64,42 @@ function getIcons(){
 	return icons;
 }
 
-function loadData(lat, long, locations, apiUrl){
+function loadData(lats, longs, locations, apiUrl){
 	///*************************************************************** */
 	//apiUrl FIELD HERE> ENTER YOUR API URL IN KEY.JS FILE.
 	///************************************************************** */
 	//var url = null;
 	//var apiUrl = darkSkyAPIUrl;
 	//var url = apiUrl.toString();
+
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
 
-	if (lat + long == 362){
-		// var url = document.getElementById('latitudeInput').value + "," + document.getElementById('longitudeInput').value;
-		// url = apiUrl+url;
+	//todo: load default locations. if locations.length > 1 ? 
+
+	var icons = getIcons();
+
+	if (lats[0] + longs[0] == 362){
 		console.log('apiUrl');
 		addMarker(apiUrl);
 	}
 	else{
 		var icons = getIcons();
-		var url = lat +","+ long;
-		url = apiUrl+url;
-		$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
-			makeMap(data, lat, long, icons, "set");
-		})
+		var urls = [];
+		for(var i = 0; i < lats.length; i++){ //creates api url for each lat/long passed in
+			var url = lats[i] + "," + longs[i];
+			url = apiUrl+url;
+			urls[i] = url;
+		}
+		makeMap(urls, lats, longs, icons, locations);
 	}
 }
 
-//makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude, 
-//icons - from getIcons, and city - if there is a city name expected or not (set to "set" if expected)
-function makeMap(data, lat, long, icons, city){
+
+//makeMap takes 5 arguments: urls - api urls passed from loadData, lats - array of lattitudes passed from loadData, longs - longitude, 
+//icons - from getIcons, and cities - if there is a city name expected or not (set to "set" if expected)
+function makeMap(urls, lats, longs, icons, cities){
 	var container = L.DomUtil.get('map');
 	if(container != null){
         container._leaflet_id = null;
@@ -99,57 +110,73 @@ function makeMap(data, lat, long, icons, city){
 	}).addTo(mymap);
 	mymap.setMaxBounds([[36.7094, -110.2259],[41.6586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
 
+	for(let i = 0; i < urls.length; i++){
+		let lat = lats[i];
+		let long = longs[i];
 
-	// different icons for the different weather types
-	// iconurl: path to icon image
-	// iconSize: size of icon image on map
-	// icon anchor: where on the icon which corresponds to icon location
-	// todo: fix the icons covering the city names
+		let locName = cities[i];
 
+		// variables for creating current icon
+		let marker1;
+		let currIcon;
+		let currWeather;
+		let currTemp;
+		let currSummary;
+		let currConditions;
 
-	var currIcon; // var storing the current icon
-	var currWeather = data.currently.icon; // var storing the current weather conditions
-	console.log("currWeather: " + currWeather);
+		let info = []; // array storing weather info from darkskysAPI call
 
-	// matching the current weather to the respective icon
-	if(currWeather.includes('clear')){
-		if(currWeather.includes('day')){
-			currIcon = icons[0];
-		}
-		else if(currWeather.includes('night')){
-			currIcon = icons[1];
-		}
-	}
-	else if(currWeather.includes('cloudy')){
-		currIcon = icons[2];
-	}
-	else if(currWeather.includes('rain')){
-		currIcon = icons[3];
-	}
-	else if(currWeather.includes('snow')){
-		currIcon = icons[4];
-	}
-	else if(currWeather.includes('storm')){
-		currIcon = icons[5];
-	}
+		$.ajax({url:urls[i], dataType:"jsonp"}).then(function(data) {
+			getCurrConditions(data, info);
 
-	//making marker update based on lat/lng inputs
-	var marker1 = L.marker([lat,long], {icon: currIcon}).addTo(mymap);
-	var locName = city;
-	if (city == "set"){
-		locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
-	}
-	//make maker for page
-	marker1.bindPopup('<h3>Weather info for ' + locName + '</h3>'
-					+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
-					+ '<div class="card bg-light">'
-					+ '<ul class="list-group">'
-					+ 	"<li class = list-group-item>Current Temperature: " +data.currently.temperature+"\u00B0 F </li>"
-					+	'<li class = list-group-item>Current Weather: '+  data.currently.summary+' </li>'
-					+ 	"<li class = list-group-item>Conditions: "+data.daily.summary+" </li>"
-					+ '</ul>'
-					+ '</div>');
+			currWeather = info[0];
+			currTemp = info[1];
+			currSummary = info[2];
+			currConditions = info[3];
 
+			// matching the current weather to the respective icon
+			if(currWeather.includes('clear')){
+				if(currWeather.includes('day')){
+					currIcon = icons[0];
+				}
+				else if(currWeather.includes('night')){
+					currIcon = icons[1];
+				}
+			}
+			else if(currWeather.includes('cloudy')){
+				currIcon = icons[2];
+			}
+			else if(currWeather.includes('rain')){
+				currIcon = icons[3];
+			}
+			else if(currWeather.includes('snow')){
+				currIcon = icons[4];
+			}
+			else if(currWeather.includes('storm')){
+				currIcon = icons[5];
+			}
+
+			//adding marker to map	
+			marker1 = new L.marker([lat, long], {icon: currIcon}).bindPopup('<h3>Weather info for ' + locName + '</h3>'
+							+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
+							+ '<div class="card bg-light">'
+							+ '<ul class="list-group">'
+							+ 	"<li class = list-group-item>Current Temperature: " + currTemp +"\u00B0 F </li>"
+							+	'<li class = list-group-item>Current Weather: '+  currSummary +' </li>'
+							+ 	"<li class = list-group-item>Conditions: "+ currConditions +" </li>"
+							+ '</ul>'
+							+ '</div>').addTo(mymap);
+		})
+	}
+}
+
+//getCurrConditions takes two arguments: data - function param from ajax callback,
+//input- array to be populated with weather data from API call
+function getCurrConditions(data, input){ 
+	input.push(data.currently.icon); 
+	input.push(data.currently.temperature);
+	input.push(data.currently.summary);
+	input.push(data.daily.summary);
 }
 
 //addMarker adds a marker to the map nbased on latatude and longitude
