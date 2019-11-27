@@ -23,7 +23,23 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
 app.get('/home', function(req, res) { // renders homepage
-	var query = "SELECT * FROM locations WHERE location_name = 'Boulder' OR location_name = 'Denver';";
+	// querying data for the top 18 most populated cities in Colorado as default values
+	var query = "SELECT * FROM locations WHERE location_name = 'Boulder' OR location_name = 'Denver' "
+	+ "OR location_name = 'Colorado Springs' "
+	+ "OR location_name = 'Aurora' " 
+	+ "OR location_name = 'Fort Collins' "
+	+ "OR location_name = 'Pueblo' "
+	+ "OR location_name = 'Lakewood' "
+	+ "OR location_name = 'Thornton' "
+	+ "OR location_name = 'Arvada' " 
+	+ "OR location_name = 'Westminster' " 
+	+ "OR location_name = 'Centennial' "
+	+ "OR location_name = 'Highlands Ranch' "
+	+ "OR location_name = 'Greeley' "
+	+ "OR location_name = 'Longmont' "
+	+ "OR location_name = 'Loveland' " 
+	+ "OR location_name = 'Broomfield' "
+	+ "OR location_name = 'Grand Junction';";
 	db.query(query)
 		.then(function(info){
 			console.log(info);
