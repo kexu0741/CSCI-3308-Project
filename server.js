@@ -30,7 +30,8 @@ app.get('/home', function(req, res) { // renders homepage
 			res.render(__dirname + "/home",{
 				my_title:"Home",
 				api_key: process.env.kevinAPIkey,
-				data: info
+				data: info,
+				multiLocs: info
 				// user_locations: info
 			});
 		})
@@ -46,7 +47,7 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 				my_title:"Home",
 				api_key: process.env.kevinAPIkey,
 				data:info, // contains the results of the search
-				user_locations: JSON.stringify(info[0].location_name)
+				user_locations: info[0].location_name
 			});
 		})
 })
