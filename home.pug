@@ -28,11 +28,8 @@ head
     - var locations = []
   
   - if(user_locations)
-    - let locations = []
-    - let temp = JSON.stringify(user_locations)
-    - locations[0] = temp
-    // - var temp = user_locations.toString()
-    // - locations[0] = temp
+    - var temp = user_locations
+    - var locs = temp
   - else
     - var locations = []
 
