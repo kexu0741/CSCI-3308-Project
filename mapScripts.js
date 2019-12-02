@@ -1,3 +1,7 @@
+if(window.location.pathname == '/'){
+	window.location.pathname = '/home';
+}
+
 
 function getIcons(){
 	var icons = [];
@@ -85,7 +89,7 @@ function loadData(lat, long, locations){
 	}
 }
 
-//makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude, 
+//makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude,
 //icons - from getIcons, and city - if there is a city name expected or not (set to "set" if expected)
 function makeMap(data, lat, long, icons, city){
 	var container = L.DomUtil.get('map');
@@ -133,7 +137,7 @@ function makeMap(data, lat, long, icons, city){
 	var locName = city;
 	if (city == "set"){
 		locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
-	} 
+	}
 	//make maker for page
 	marker1.bindPopup('<h3>Weather info for ' + locName + '</h3>'
 					+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
@@ -150,21 +154,19 @@ function makeMap(data, lat, long, icons, city){
 //addMarker adds a marker to the map nbased on latatude and longitude
 function addMarker(){
 	var container = L.DomUtil.get('map'); //get map comtainer
-	if(container != null){ 
+	if(container != null){
         container._leaflet_id = null; //remove map if map exists
 	}
 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8); //make map view
 	lat = document.getElementById('latitudeInput').value;
-	lng = document.getElementById('longitudeInput').value;	
+	lng = document.getElementById('longitudeInput').value;
 	var apiUrl = darkSkyAPIUrl; // get API url
 	var icons = getIcons(); //get icons for map
 	var url = lat +","+ lng;
 	url = apiUrl+url;
 	//get map data and pass it so a pin can be made
-	$.ajax({url:url, dataType:"jsonp"}).then(function(data) { 
+	$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
 		city = lat + ", " + lng;
 		makeMap(data, lat, lng, icons, city);
 	})
 }
-
-

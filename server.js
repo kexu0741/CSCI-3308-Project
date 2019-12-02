@@ -18,7 +18,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: "" // when testing, remember to change this to your password and remove before commit
+	password: "M1ndB4Mouth" // when testing, remember to change this to your password and remove before commit
 };
 
 let db = pgp(dbConfig);
@@ -72,6 +72,12 @@ app.get('/home', function(req, res) { // renders homepage
 			});
 		})
 
+});
+
+app.get('/', function(req, res) { // renders homepage
+	res.render(__dirname + "/home",{
+		my_title:"Home"
+	});
 });
 
 app.get('/home/search', function(req, res) { // renders homepage with search query
