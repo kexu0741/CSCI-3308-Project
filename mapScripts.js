@@ -92,7 +92,6 @@ function loadData(lat, long, locations){
 //makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude,
 //icons - from getIcons, and city - if there is a city name expected or not (set to "set" if expected)
 function makeMap(data, lat, long, icons, city){
->>>>>>> ef982fb627fff912a8c418c3b5527139eff90b32
 	var container = L.DomUtil.get('map');
 	if(container != null){
         container._leaflet_id = null;
