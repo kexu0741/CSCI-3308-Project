@@ -18,7 +18,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: "M1ndB4Mouth" // when testing, remember to change this to your password and remove before commit
+	password: "" // when testing, remember to change this to your password and remove before commit
 };
 
 let db = pgp(dbConfig);
@@ -31,11 +31,11 @@ const mail_from = mail.createTransport({
   }
 });
 
-var check_subscribers = "SELECT email,subscribe FROM users;";
+var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
 db.query(check_subscribers)
 	.then(function(info) {
 		var mailing_list = '';
-		for(i = 0; i < info.length; i++){
+		for(i = 0; i < info.length; i++){ // formats string with all emails that are subscribed
 			if(info[i].subscribe === true){
 				if(mailing_list.length != 0){
 					mailing_list += ', ';
@@ -43,14 +43,14 @@ db.query(check_subscribers)
 				mailing_list += info[i].email;
 			}
 		}
-		var message = {
+		var message = { // composition of the email
 		  from: 'thedisastertracker@gmail.com',
 		  to: mailing_list,
 		  subject: 'If this works, hurrah',
 		  text: 'cool weather stuff'
 		};
 
-		// mail_from.sendMail(message, function(error, info){
+		// mail_from.sendMail(message, function(error, info){ // sends email
 		//   if (error) {
 		//     console.log(error);
 		//   } else {
