@@ -4,6 +4,7 @@
 */
 
 const express = require('express');
+const pass = require(__dirname + '/dbPassword');
 let app = express();
 const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
@@ -15,7 +16,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: 'M1ndB4Mouth' // when testing, remember to change this to your password
+	password: '' // when testing, remember to change this to your password
 };
 
 let db = pgp(dbConfig);
@@ -24,9 +25,15 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
 app.get('/home', function(req, res) { // renders homepage
-	res.render(__dirname + "/home",{
-		my_title:"Home"
-	});
+	var query = "SELECT * FROM locations;";
+	db.query(query)
+		.then(function(info) {
+			res.render(__dirname + "/home",{
+				my_title: "Home",
+				allLocations: info
+			});
+		})
+
 });
 
 app.get('/home/search', function(req, res) { // renders homepage with search query
@@ -88,5 +95,7 @@ app.post('/home/user_loc', function(req, res) {
 			});
 		})
 })
+
+console.log("Welcome to port 3000");
 
 app.listen('3000');
