@@ -81,7 +81,7 @@ app.get('/', function(req, res) { // renders homepage
 });
 
 app.get('/home/search', function(req, res) { // renders homepage with search query
-	var searchTerm = req.query.search;
+	var searchTerm = req.query.search.replace("+", " ");
 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
 	db.query(query) // searches DB
 		.then(function(info) {
