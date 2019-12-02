@@ -18,7 +18,7 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: "" // when testing, remember to change this to your password and remove before commit
+	password: "letmein123" // when testing, remember to change this to your password and remove before commit
 };
 
 let db = pgp(dbConfig);
@@ -143,4 +143,4 @@ app.post('/home/user_loc', function(req, res) {
 
 console.log("Welcome to port 3000");
 
-app.listen('3000');
+app.listen('8000');
