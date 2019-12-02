@@ -30,6 +30,12 @@ app.get('/home', function(req, res) { // renders homepage
 	});
 });
 
+app.get('/', function(req, res) { // renders homepage
+	res.render(__dirname + "/home",{
+		my_title:"Home"
+	});
+});
+
 app.get('/home/search', function(req, res) { // renders homepage with search query
 	var searchTerm = req.query.search;
 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
