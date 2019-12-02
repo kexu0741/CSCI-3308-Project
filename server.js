@@ -4,6 +4,8 @@
 */
 
 const express = require('express');
+const pass = require(__dirname + '/dbPassword');
+const mail = require('nodemailer');
 let app = express();
 const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
@@ -16,15 +18,63 @@ const dbConfig = {
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: "" // when testing, remember to change this to your password and remove before commit
+	password: "M1ndB4Mouth" // when testing, remember to change this to your password and remove before commit
 };
 
 let db = pgp(dbConfig);
+
+const mail_from = mail.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'thedisastertracker@gmail.com',
+    pass: 'plschange'
+  }
+});
+
+var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
+db.query(check_subscribers)
+	.then(function(info) {
+		var mailing_list = '';
+		for(i = 0; i < info.length; i++){ // formats string with all emails that are subscribed
+			if(info[i].subscribe === true){
+				if(mailing_list.length != 0){
+					mailing_list += ', ';
+				}
+				mailing_list += info[i].email;
+			}
+		}
+		var message = { // composition of the email
+		  from: 'thedisastertracker@gmail.com',
+		  to: mailing_list,
+		  subject: 'If this works, hurrah',
+		  text: 'cool weather stuff'
+		};
+
+		// mail_from.sendMail(message, function(error, info){ // sends email
+		//   if (error) {
+		//     console.log(error);
+		//   } else {
+		//     console.log('Email sent: ' + info.response);
+		//   }
+		// });
+	})
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
 app.get('/home', function(req, res) { // renders homepage
+	var query = "SELECT * FROM locations;";
+	db.query(query)
+		.then(function(info) {
+			res.render(__dirname + "/home",{
+				my_title: "Home",
+				allLocations: info
+			});
+		})
+
+});
+
+app.get('/', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
 		my_title:"Home"
 	});
@@ -58,9 +108,9 @@ app.get('/userprofile', function(req, res) { // renders userprofile page
 app.post('/userprofile/register', function(req, res) { // saves user info to DB
 	res.status(204).send();
 	var body = req.body;
-	var insert_user = "INSERT INTO users(first_name,last_name,phone,mobile,email,password)VALUES('";
+	var insert_user = "INSERT INTO users(first_name,last_name,phone,mobile,email,password,subscribe)VALUES('";
 	var location_check = "SELECT id FROM locations WHERE location_name = '" + body.location + "';";
-	insert_user += body.first_name + "','" + body.last_name + "','" + body.phone  + "','" + body.mobile + "','" + body.email + "','" + body.password + "') ON CONFLICT DO NOTHING;";
+	insert_user += body.first_name + "','" + body.last_name + "','" + body.phone  + "','" + body.mobile + "','" + body.email + "','" + body.password + "','" + body.subscribe + "') ON CONFLICT DO NOTHING;";
 	db.task('get-everything', task => {
 			return task.batch([
 					task.any(insert_user),
@@ -90,5 +140,7 @@ app.post('/home/user_loc', function(req, res) {
 			});
 		})
 })
+
+console.log("Welcome to port 3000");
 
 app.listen('3000');

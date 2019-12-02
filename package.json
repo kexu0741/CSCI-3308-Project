@@ -18,14 +18,26 @@
   "homepage": "https://github.com/kexu0741/CSCI-3308-Project#readme",
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "pg-promise": "^9.3.5",
 =======
+=======
+    "assert-options": "^0.6.0",
+>>>>>>> d55bf48bc1d22198abde3c79e6b16a63800d339a
     "express": "^4.17.1",
+    "manakin": "^0.5.2",
     "node": "^13.1.0",
+<<<<<<< HEAD
     "pg-promise": "^10.2.1",
 >>>>>>> ef982fb627fff912a8c418c3b5527139eff90b32
+=======
+    "nodemailer": "^6.3.1",
+    "pg": "^7.14.0",
+    "pg-minify": "^1.5.1",
+    "pg-promise": "^10.3.1",
+>>>>>>> d55bf48bc1d22198abde3c79e6b16a63800d339a
     "pug": "^2.0.4"
   }
 }

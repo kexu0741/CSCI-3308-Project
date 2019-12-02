@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-// window.onload = function(){
-// 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
-// 	L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
-// 		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-// 	}).addTo(mymap);
-// 	var markers = [[40.0169, -105.2796, "Boulder"]];
-// 	// if(#{ns_coordinate} + #{ew_coordinate} != 0){
-// 	// 	markers[markers.length] = [#{ns_coordinate}, #{ew_coordinate}]
-// 	// }
-// 	console.log(markers);
-// 	mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
-// 	for(var i = 0; i < markers.length; i++){
-// 		var marker = L.marker([markers[i][0], markers[i][1]]).addTo(mymap);
-// 		marker.bindPopup('<h3>Weather info for (cityname)</h3>'
-// 						+ '<div class="card bg-light">'
-// 						+ '<ul class="list-group">'
-// 						+ 	'<li class = list-group-item>Current Temperature: </li>'
-// 						+	'<li class = list-group-item>Feels Like: </li>'
-// 						+ 	'<li class = list-group-item>Current Conditions: </li>'
-// 						+ '</ul>'
-// 						+ '</div>');
-// 	}
-// }
-function makeMap(lat, long){ //, locName){
-=======
 
 if(window.location.pathname == '/'){
 	window.location.pathname = '/home';
@@ -115,7 +89,7 @@ function loadData(lat, long, locations){
 	}
 }
 
-//makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude, 
+//makeMap takes 5 arguments: data - passed from loadData, lat - the entered latatude, long - longitude,
 //icons - from getIcons, and city - if there is a city name expected or not (set to "set" if expected)
 function makeMap(data, lat, long, icons, city){
 >>>>>>> ef982fb627fff912a8c418c3b5527139eff90b32
@@ -123,35 +97,10 @@ function makeMap(data, lat, long, icons, city){
 	if(container != null){
         container._leaflet_id = null;
     }
-<<<<<<< HEAD
-	console.log(lat + ' ' + long);
-=======
->>>>>>> ef982fb627fff912a8c418c3b5527139eff90b32
 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8);
 	L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
 		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
 	}).addTo(mymap);
-<<<<<<< HEAD
-	var markers = [[40.0169, -105.2796, "Boulder"]];
-	if(lat + long != 0){
-		markers[markers.length] = [lat, long] //, locName];
-	}
-	console.log(markers);
-	mymap.setMaxBounds([[36.7094, -110.2259],[41.1586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
-	for(var i = 0; i < markers.length; i++){
-		console.log(markers[i][2]);
-		var marker = L.marker([markers[i][0], markers[i][1]]).addTo(mymap);
-		marker.bindPopup('<h3>Weather info for ' + markers[i][2] + '</h3>'
-						+ '<div class="card bg-light">'
-						+ '<ul class="list-group">'
-						+ 	'<li class = list-group-item>Current Temperature: </li>'
-						+	'<li class = list-group-item>Feels Like: </li>'
-						+ 	'<li class = list-group-item>Current Conditions: </li>'
-						+ '</ul>'
-						+ '</div>');
-	}
-}
-=======
 	mymap.setMaxBounds([[36.7094, -110.2259],[41.6586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
 
 
@@ -189,7 +138,7 @@ function makeMap(data, lat, long, icons, city){
 	var locName = city;
 	if (city == "set"){
 		locName = window.location.href.substring(window.location.href.lastIndexOf('=') + 1);
-	} 
+	}
 	//make maker for page
 	marker1.bindPopup('<h3>Weather info for ' + locName + '</h3>'
 					+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
@@ -206,22 +155,19 @@ function makeMap(data, lat, long, icons, city){
 //addMarker adds a marker to the map nbased on latatude and longitude
 function addMarker(){
 	var container = L.DomUtil.get('map'); //get map comtainer
-	if(container != null){ 
+	if(container != null){
         container._leaflet_id = null; //remove map if map exists
 	}
 	var mymap = L.map('map', {minZoom: 7.45}).setView([40.0169, -105.2796], 8); //make map view
 	lat = document.getElementById('latitudeInput').value;
-	lng = document.getElementById('longitudeInput').value;	
+	lng = document.getElementById('longitudeInput').value;
 	var apiUrl = darkSkyAPIUrl; // get API url
 	var icons = getIcons(); //get icons for map
 	var url = lat +","+ lng;
 	url = apiUrl+url;
 	//get map data and pass it so a pin can be made
-	$.ajax({url:url, dataType:"jsonp"}).then(function(data) { 
+	$.ajax({url:url, dataType:"jsonp"}).then(function(data) {
 		city = lat + ", " + lng;
 		makeMap(data, lat, lng, icons, city);
 	})
 }
-
-
->>>>>>> ef982fb627fff912a8c418c3b5527139eff90b32

@@ -68,6 +68,11 @@ head
                   h4 Verify
                 input#password2.form-control(type='password' name='password2' placeholder='password2' title='enter your password2.')
             .form-group
+              .col-xs-6
+                label(for='subscribe')
+                  h4 Subscribe for email updates
+                input#subscribe.form-check-input(type='checkbox' name='subscribe' style='padding-top:200%')
+            .form-group
               .col-xs-12
                 br
                 button.btn.btn-lg.btn-success(type='submit')
@@ -76,3 +81,4 @@ head
                 button.btn.btn-lg(type='reset')
                   i.glyphicon.glyphicon-repeat
                   |  Reset
+          
