@@ -5,7 +5,7 @@
 
 const express = require('express');
 
-const pass = require(__dirname + '/dbPassword'); // this line causing problems
+//const pass = require(__dirname + '/dbPassword'); // this line causing problems
 const mail = require('nodemailer');
 
 let app = express();
