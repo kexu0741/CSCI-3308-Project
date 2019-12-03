@@ -5,3 +5,5 @@
 keys.js
 dbPassword.js
 >>>>>>> origin/master
+*.env
+.env

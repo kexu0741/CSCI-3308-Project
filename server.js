@@ -99,6 +99,7 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 				user_locations: JSON.stringify(info[0].location_name)
 			});
 		})
+})	
 
 app.get('/', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
@@ -152,6 +153,6 @@ app.post('/home/user_loc', function(req, res) {
 				user_locations: locations
 			});
 		})
-})
+});
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8000);

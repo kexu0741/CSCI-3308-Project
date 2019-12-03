@@ -1,0 +1,31 @@
+{
+  "name": "csci-3308-project",
+  "version": "1.0.0",
+  "description": "Disaster Tracker is an interactive website that displays weather information for Colorado.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kexu0741/CSCI-3308-Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kexu0741/CSCI-3308-Project/issues"
+  },
+  "homepage": "https://github.com/kexu0741/CSCI-3308-Project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pg-promise": "^10.3.1",
+    "assert-options": "^0.6.0",
+    "manakin": "^0.5.2",
+    "node": "^13.1.0",
+    "nodemailer": "^6.3.1",
+    "pg": "^7.14.0",
+    "pg-minify": "^1.5.1",
+    "pug": "^2.0.4"
+  }
+}
