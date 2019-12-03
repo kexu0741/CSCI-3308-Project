@@ -19,8 +19,11 @@ head
   
   - if(user_locations)
     - var userLocations = user_locations
+    script.
+      console.log(#{userLocations});
   - else
     - var userLocations = []
+  - var directory = __dirname
   style.
     #map {
     position: absolute;
