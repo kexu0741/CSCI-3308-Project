@@ -1,0 +1,78 @@
+
+link#bootstrap-css(href='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet')
+script(src='//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js')
+script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+head
+  title User Profile
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+.container.bootstrap.snippet
+  .row
+    .col-sm-10
+      h1 User name
+    .col-sm-2
+      a.pull-right(href='/users')
+  .row
+    .col-sm-3
+      .text-center
+        img.avatar.img-circle.img-thumbnail(src='http://ssl.gstatic.com/accounts/ui/avatar_2x.png' alt='avatar')
+        h6 Upload a different photo...
+        input.text-center.center-block.file-upload(type='file')
+      br
+    .col-sm-9
+      .tab-content
+        #home.tab-pane.active
+          hr
+          form#registrationForm.form(action='userprofile/register' method='post')
+            .form-group
+              .col-xs-6
+                label(for='first_name')
+                  h4 First name
+                input#first_name.form-control(type='text' name='first_name' placeholder='first name' title='enter your first name if any.')
+            .form-group
+              .col-xs-6
+                label(for='last_name')
+                  h4 Last name
+                input#last_name.form-control(type='text' name='last_name' placeholder='last name' title='enter your last name if any.')
+            .form-group
+              .col-xs-6
+                label(for='phone')
+                  h4 Phone
+                input#phone.form-control(type='text' name='phone' placeholder='enter phone' title='enter your phone number if any.')
+            .form-group
+              .col-xs-6
+                label(for='mobile')
+                  h4 Mobile
+                input#mobile.form-control(type='text' name='mobile' placeholder='enter mobile number' title='enter your mobile number if any.')
+            .form-group
+              .col-xs-6
+                label(for='email')
+                  h4 Email
+                input#email.form-control(type='email' name='email' placeholder='you@email.com' title='enter your email.')
+            .form-group
+              .col-xs-6
+                label(for='location')
+                  h4 Location
+                input#location.form-control(type='text' name='location' placeholder='somewhere' title='enter a location')
+            .form-group
+              .col-xs-6
+                label(for='password')
+                  h4 Password
+                input#password.form-control(type='password' name='password' placeholder='password' title='enter your password.')
+            .form-group
+              .col-xs-6
+                label(for='password2')
+                  h4 Verify
+                input#password2.form-control(type='password' name='password2' placeholder='password2' title='enter your password2.')
+            .form-group
+              .col-xs-12
+                br
+                button.btn.btn-lg.btn-success(type='submit')
+                  i.glyphicon.glyphicon-ok-sign
+                  |  Save
+                button.btn.btn-lg(type='reset')
+                  i.glyphicon.glyphicon-repeat
+                  |  Reset

@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <p>
+        Boulder: (40.0169,-105.2796)
+        </p>
+        <form onsubmit="myFunction()">
+            latitude: <input type="text" name="fname" id="lat"><br>
+            longitude: <input type="text" name="lname" id="lng"><br>
+            <input type="submit" value="Submit">
+          </form> 
+    </body>
+</html>
+<script>
+function myFunction(){
+    var lat = document.getElementById("lat").value;
+    var lng = document.getElementById("lng").value;
+    alert(lat + " "+lng)
+    window.open("https://api.weather.gov/points/"+lat+","+lng);
+}
+</script>

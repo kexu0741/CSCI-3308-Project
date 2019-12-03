@@ -1,0 +1,77 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+  script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+  link(rel='stylesheet' href='https://unpkg.com/leaflet@1.5.1/dist/leaflet.css' integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==' crossorigin='')
+  script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
+  //- script(src="../keys.js")
+  script(src="../mapScripts.js" )
+
+  - if(data)
+    // - var ns_coordinate = data.ns_coordinate
+    // - var ew_coordinate = data.ew_coordinate
+    - var ns_coordinates = []
+    - var ew_coordinates = []
+    - let locations = []
+
+    - for(let i = 0; i < data.length; i++) {
+      - ns_coordinates[i] = data[i].ns_coordinate
+      - ew_coordinates[i] = data[i].ew_coordinate
+    - }
+  - else
+    - var ns_coordinate = 0.0
+    - var ew_coordinate = 0.0 
+    - var locations = []
+  
+  - if(user_locations)
+    - var temp = user_locations
+    - var locs = temp
+  - else
+    - var locations = []
+
+  - if(multiLocs)
+    - var locs = []
+    - for(let i = 0; i < multiLocs.length; i++){
+      - var tempLoc = JSON.stringify(multiLocs[i].location_name);
+      - locs[i] = tempLoc
+    - }
+ 
+
+  style.
+    #map {
+    position: absolute;
+    width: 80%;
+    height:100%;
+    border: 1px solid black;
+    }
+    #sideBar{
+    width: 20%;
+    }
+  title Disaster Tracker
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  a.navbar-brand(href='#') Disaster Tracker
+  button.btn.btn-outline-success.my-2.my-sm-0(style='position: absolute; right: 0;')
+    a(href='../userprofile') Login
+#map
+div
+  container
+    form#sideBar.form-inline(action='/home/search' method='get' style='position: absolute; right: 0;')
+      input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
+      button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+      script.
+        let locations = [];
+        locations = [!{locs}];
+        window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}");
+    form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
+      label(for='latitudeInput') Latitude
+      input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')
+      label(for='longitudeInput') Longitude
+      input#longitudeInput.form-control(type='integer' placeholder='Long')
+      //- loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
+      button#setLatLng.btn.btn-primary(type='button' onclick='loadData(181,181);return false;' style='margin-top: 2%;') Search
+
+s
