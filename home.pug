@@ -66,6 +66,9 @@ div
         let locations = [];
         locations = [!{locs}];
         window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}");
+
+div
+  container
     form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
       label(for='latitudeInput') Latitude
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')
