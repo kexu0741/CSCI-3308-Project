@@ -36,11 +36,7 @@ const dbConfig = new Pool({
 	port: 5432,
 	database: 'disaster_tracker', // name of db
 	user: 'postgres',
-// <<<<<<< HEAD
-	password: 'Listen420' // postgres password
-// =======
-// 	password: '' // postgres password (your password here)
-// >>>>>>> 5bebb820d8e23b1a77dae0ac6bc3be31d659d655
+	password: '' // postgres password (your password here)
 })
 
 /*

@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 *.env
 .env
+=======
+keys.js
+dbPassword.js
+>>>>>>> origin/master

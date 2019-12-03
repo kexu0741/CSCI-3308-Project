@@ -8,7 +8,7 @@ head
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
   link(rel='stylesheet' href='https://unpkg.com/leaflet@1.5.1/dist/leaflet.css' integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==' crossorigin='')
   script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
-  //- script(src="../keys.js")
+  
   script(src="../mapScripts.js" )
 
   - if(data)
@@ -40,7 +40,6 @@ head
       - locs[i] = tempLoc
     - }
  
-
   style.
     #map {
     position: absolute;
@@ -53,7 +52,7 @@ head
     }
   title Disaster Tracker
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
-  a.navbar-brand(href='#') Disaster Tracker
+  a.navbar-brand(href='#') RAD Weather
   button.btn.btn-outline-success.my-2.my-sm-0(style='position: absolute; right: 0;')
     a(href='../userprofile') Login
 #map
@@ -66,15 +65,14 @@ div
         let locations = [];
         locations = [!{locs}];
         window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}");
-
 div
   container
     form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
       label(for='latitudeInput') Latitude
-      input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Lat')
+      input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Latitude')
       label(for='longitudeInput') Longitude
-      input#longitudeInput.form-control(type='integer' placeholder='Long')
-      //- loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
+      input#longitudeInput.form-control(type='integer' placeholder='Longitude')
+      //loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
       button#setLatLng.btn.btn-primary(type='button' onclick='loadData(181,181);return false;' style='margin-top: 2%;') Search
 
 s

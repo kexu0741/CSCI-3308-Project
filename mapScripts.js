@@ -1,9 +1,12 @@
+if(window.location.pathname == '/'){
+	window.location.pathname = '/home';
+}
+
 function getIcons(){
 	// different icons for the different weather types
 	// iconurl: path to icon image
 	// iconSize: size of icon image on map
 	// icon anchor: where on the icon which corresponds to icon location
-	// todo: fix the icons covering the city names
 	var icons = [];
 
 	icons[0] = L.icon({
@@ -65,18 +68,9 @@ function getIcons(){
 }
 
 function loadData(lats, longs, locations, apiUrl){
-	///*************************************************************** */
-	//apiUrl FIELD HERE> ENTER YOUR API URL IN KEY.JS FILE.
-	///************************************************************** */
-	//var url = null;
-	//var apiUrl = darkSkyAPIUrl;
-	//var url = apiUrl.toString();
-
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
-
-	//todo: load default locations. if locations.length > 1 ? 
 
 	var icons = getIcons();
 
@@ -198,5 +192,3 @@ function addMarker(key){
 		makeMap(data, lat, lng, icons, city);
 	})
 }
-
-
