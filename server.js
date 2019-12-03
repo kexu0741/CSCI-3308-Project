@@ -143,4 +143,4 @@ app.post('/home/user_loc', function(req, res) {
 
 console.log("Welcome to port 3000");
 
-app.listen('3000');
+app.listen('8000');
