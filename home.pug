@@ -39,7 +39,6 @@ head
       - var tempLoc = JSON.stringify(multiLocs[i].location_name);
       - locs[i] = tempLoc
     - }
- 
   style.
     #map {
     position: absolute;
@@ -47,6 +46,7 @@ head
     height:100%;
     border: 1px solid black;
     }
+
     #sideBar{
     width: 20%;
     }
@@ -72,7 +72,7 @@ div
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Latitude')
       label(for='longitudeInput') Longitude
       input#longitudeInput.form-control(type='integer' placeholder='Longitude')
-      //loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
+      //- //loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
       button#setLatLng.btn.btn-primary(type='button' onclick='loadData(181,181);return false;' style='margin-top: 2%;') Search
 
 s

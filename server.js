@@ -5,7 +5,7 @@
 
 const express = require('express');
 
-const pass = require(__dirname + '/dbPassword');
+const pass = require(__dirname + '/dbPassword'); // this line causing problems
 const mail = require('nodemailer');
 
 let app = express();
@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 globalVariable = {};
 
-
+// setting up dbconfig for heroku
 const dbConfig = {
 	connectionString: process.env.DATABASE_URL,
 	ssl: true,
@@ -75,7 +75,6 @@ app.get('/home', function(req, res) { // renders homepage
 	+ "OR location_name = 'Grand Junction';";
 	db.query(query)
 		.then(function(info){
-			console.log(info);
 			res.render(__dirname + "/home",{
 				my_title:"Home",
 				api_key: process.env.kevinAPIkey,
@@ -155,4 +154,4 @@ app.post('/home/user_loc', function(req, res) {
 		})
 });
 
-app.listen(process.env.PORT || 8000);
+app.listen(process.env.PORT || 8000); // listens on heroku's port or port 8000
