@@ -103,7 +103,7 @@ function makeMap(urls, lats, longs, icons, cities){
 	L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
 		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
 	}).addTo(mymap);
-	mymap.setMaxBounds([[36.7094, -110.2259],[41.6586, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
+	mymap.setMaxBounds([[36.7094, -110.3259],[42.0595, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
 
 	for(let i = 0; i < urls.length; i++){
 		let lat = lats[i];
@@ -152,13 +152,13 @@ function makeMap(urls, lats, longs, icons, cities){
 			}
 
 			//adding marker to map	
-			marker1 = new L.marker([lat, long], {icon: currIcon}).bindPopup('<h3>Weather info for ' + locName + '</h3>'
-							+ '<p>Entered latitude and longitude: '+ lat +" "+ long +'</p>'
+			marker1 = new L.marker([lat, long], {icon: currIcon}).bindPopup('<h2>Weather Info For ' + locName + '</h2>'
+							+ '<h9 class="card-subtitle mb-2 text-muted">Entered Latitude and Longitude: '+ lat +" "+ long +'</h9>'
 							+ '<div class="card bg-light">'
 							+ '<ul class="list-group">'
-							+ 	"<li class = list-group-item>Current Temperature: " + currTemp +"\u00B0 F </li>"
-							+	'<li class = list-group-item>Current Weather: '+  currSummary +' </li>'
-							+ 	"<li class = list-group-item>Conditions: "+ currConditions +" </li>"
+							+ 	"<li class = list-group-item><h6>Current Temperature: <br><br>" + currTemp +"\u00B0 F </h6></li>"
+							+	'<li class = list-group-item><h6>Current Weather: <br><br>'+  currSummary +'</h6> </li>'
+							+ 	"<li class = list-group-item><h6>Conditions: <br><br>"+ currConditions +"</h6> </li>"
 							+ '</ul>'
 							+ '</div>').addTo(mymap);
 		})
