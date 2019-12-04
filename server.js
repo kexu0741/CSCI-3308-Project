@@ -4,8 +4,6 @@
 */
 
 const express = require('express');
-
-//const pass = require(__dirname + '/dbPassword'); // this line causing problems
 const mail = require('nodemailer');
 
 let app = express();
@@ -119,7 +117,6 @@ app.get('/userprofile', function(req, res) { // renders userprofile page
 });
 
 app.post('/userprofile/register', function(req, res) { // saves user info to DB
-	res.status(204).send();
 	var body = req.body;
 	var insert_user = "INSERT INTO users(first_name,last_name,phone,mobile,email,password,subscribe)VALUES('";
 	var location_check = "SELECT id FROM locations WHERE location_name = '" + body.location + "';";
@@ -137,6 +134,7 @@ app.post('/userprofile/register', function(req, res) { // saves user info to DB
 			db.query(insert_location)
 		}
 	})
+	res.render(__dirname + '/login')
 });
 
 app.get('/login', function(req, res) { // renders userprofile page
