@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 globalVariable = {};
 
+
 // setting up dbconfig for heroku
 const dbConfig = {
 	connectionString: process.env.DATABASE_URL,
@@ -20,6 +21,7 @@ const dbConfig = {
 };
 
 var db = pgp(dbConfig);
+
 
 const mail_from = mail.createTransport({
   service: 'gmail',
@@ -49,6 +51,7 @@ db.query(check_subscribers)
 		};
 
 	})
+
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));

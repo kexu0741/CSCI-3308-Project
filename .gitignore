@@ -3,7 +3,13 @@
 .env
 =======
 keys.js
+<<<<<<< HEAD
 dbPassword.js
 >>>>>>> origin/master
 *.env
 .env
+=======
+*.en
+*.env
+.en
+>>>>>>> 3856526f8f957f8bec3e6fa5698a0e9803bb7ef6

@@ -7,6 +7,7 @@ function getIcons(){
 	// iconurl: path to icon image
 	// iconSize: size of icon image on map
 	// icon anchor: where on the icon which corresponds to icon location
+
 	var icons = [];
 
 	icons[0] = L.icon({
