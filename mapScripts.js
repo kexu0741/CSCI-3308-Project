@@ -152,14 +152,17 @@ function makeMap(urls, lats, longs, icons, cities){
 			}
 
 			//adding marker to map	
-			marker1 = new L.marker([lat, long], {icon: currIcon}).bindPopup('<h2>Weather Info For ' + locName + '</h2>'
+			marker1 = new L.marker([lat, long], {icon: currIcon}).bindPopup("<h3>Weather Info For " + locName + '</h3>'
 							+ '<h9 class="card-subtitle mb-2 text-muted">Entered Latitude and Longitude: '+ lat +" "+ long +'</h9>'
 							+ '<div class="card bg-light">'
-							+ '<ul class="list-group">'
-							+ 	"<li class = list-group-item><h6>Current Temperature: <br><br>" + currTemp +"\u00B0 F </h6></li>"
-							+	'<li class = list-group-item><h6>Current Weather: <br><br>'+  currSummary +'</h6> </li>'
-							+ 	"<li class = list-group-item><h6>Conditions: <br><br>"+ currConditions +"</h6> </li>"
-							+ '</ul>'
+							+ '<dl class="row">'
+							+ 	"<dt class='col-sm-7'>Current Temperature</dt>"
+							+   "<dd class='col-sm-3'>" + currTemp +"\u00B0 F </dd> <br><br>"
+							+	"<dt class='col-sm-7'>Current Weather</dt>"  
+							+   "<dd class='col-sm-3'>" + currSummary +"</dd> <br><br>"
+							+ 	"<dt class='col-sm-7'>Conditions</dd>"
+							+ "<dd class='col-sm-3'>" + currConditions + "</dd>"
+							+ '</dl>'
 							+ '</div>').addTo(mymap);
 		})
 	}
