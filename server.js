@@ -11,14 +11,13 @@ const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-globalVariable = {};
 
 const dbConfig = {
 	host: 'localhost',
 	port: 5432,
 	database: 'disaster_tracker',
 	user: 'postgres',
-	password: "" // when testing, remember to change this to your password and remove before commit
+	password: "M1ndB4Mouth" // when testing, remember to change this to your password and remove before commit
 };
 
 let db = pgp(dbConfig);
@@ -161,19 +160,10 @@ app.post('/home/user_loc', function(req, res) {
 				}
 				db.query(get_coords)
 					.then(function(info) {
-						var loc_info = new Array(50);
-						for (i = 0; i < loc_info.length; i++){
-							loc_info[i] = new Array(3);
-						}
-						for (i = 0; i < info.length; i++){
-							loc_info[i][0] = info[i].location_name;
-							loc_info[i][1] = info[i].ns_coordinate;
-							loc_info[i][2] = info[i].ew_coordinate;
-						}
-						console.log(loc_info);
-						res.render(__dirname + '/home',{
-							user_locations: loc_info
-						});
+						console.log(info);
+							res.render(__dirname + '/home',{
+								user_locations: JSON.stringify(info)
+							})
 					})
 			}
 			else{
