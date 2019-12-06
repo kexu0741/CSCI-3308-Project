@@ -152,13 +152,43 @@ app.get('/login', function(req, res) { // renders userprofile page
 });
 
 app.post('/home/user_loc', function(req, res) {
-	var get_locations = "SELECT locations FROM users WHERE email = '" + req.body.usrname + "';";
+	var get_locations = "SELECT locations FROM users WHERE email = '" + req.body.usrname + "';"; // pulling all locations that the user has saved and passing their ids to the pug page
 	db.query(get_locations)
 		.then(function(info) {
 			var locations = info[0].locations;
-			res.render(__dirname + '/home',{
-				user_locations: locations
-			});
+			if (locations.length > 0){
+				var get_coords = "SELECT * FROM locations WHERE id = ";
+				for (i = 0; i < locations.length; i++){
+					get_coords += locations[i];
+					if (i < locations.length - 1){
+						get_coords += " OR id = ";
+					}
+					else{
+						get_coords += ";";
+					}
+				}
+				db.query(get_coords)
+					.then(function(info) {
+						var loc_info = new Array(50);
+						for (i = 0; i < loc_info.length; i++){
+							loc_info[i] = new Array(3);
+						}
+						for (i = 0; i < info.length; i++){
+							loc_info[i][0] = info[i].location_name;
+							loc_info[i][1] = info[i].ns_coordinate;
+							loc_info[i][2] = info[i].ew_coordinate;
+						}
+						console.log(loc_info);
+						res.render(__dirname + '/home',{
+							user_locations: loc_info
+						});
+					})
+			}
+			else{
+				res.render(__dirname + '/home',{
+					my_title:"Home"
+				});
+			}
 		})
 });
 
