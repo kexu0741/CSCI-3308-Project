@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="./jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="./jasmine/jasmine.css">
+
+    <script type="text/javascript" src="./jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="./jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="./jasmine/boot.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   	crossorigin=""/>
+   	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   	integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+       crossorigin=""></script>
+    <script src="mapScripts.js"></script>
+    <script type="text/javascript" src=".keys.js"></script>
+    <script>
+        
+        Object.size = function(obj) {
+            var size = 0, key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
+
+        describe('Get Icons Array', () => {
+            it('Does the array of icons have 8 objects', () => {
+                // act
+                const result = getIcons();
+                // assert
+                expect(Object.size(result)).toBe(8);
+            })
+            it('Does the array of icons have less than 8 objects', () => {
+                // act
+                const result = getIcons();
+                // assert
+                expect(Object.size(result)).not.toBeLessThan(8);
+            })
+            
+            it('Does the array of icons have more  than 8 objects', () => {
+                // act
+                const result = getIcons();
+                // assert
+                expect(Object.size(result)).not.toBeGreaterThan(8);
+            })
+        });
+
+
+        describe('Get Icons Array', () => {
+            it('Does the array of icons have 8 objects', () => {
+                // act
+                var lat = 0;
+                var long = 0;
+                const result = loadData(lat, long);
+                console.log(result);
+                // assert
+                expect(Object.size(result)).toBe("Invalid Latitude and longitude");
+            })
+        });
+
+
+    </script>
+</head>
+
+</html>
