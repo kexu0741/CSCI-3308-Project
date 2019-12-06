@@ -48,8 +48,8 @@ function sendEmail(){
 			var message = { // composition of the email
 			  from: 'thedisastertracker@gmail.com',
 			  to: mailing_list,
-			  subject: 'If this works, hurrah',
-			  text: 'cool weather stuff'
+			  subject: 'Weather info for today',
+			  text: 'Highlands Ranch: 52 F'
 			};
 
 			mail_from.sendMail(message, function(error, info){

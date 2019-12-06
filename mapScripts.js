@@ -156,12 +156,12 @@ function makeMap(urls, lats, longs, icons, cities){
 							+ '<h9 class="card-subtitle mb-2 text-muted">Entered Latitude and Longitude: '+ lat +" "+ long +'</h9>'
 							+ '<div class="card bg-light">'
 							+ '<dl class="row">'
-							+ 	"<dt class='col-sm-7'>Current Temperature</dt>"
-							+   "<dd class='col-sm-3'>" + currTemp +"\u00B0 F </dd> <br><br>"
-							+	"<dt class='col-sm-7'>Current Weather</dt>"  
-							+   "<dd class='col-sm-3'>" + currSummary +"</dd> <br><br>"
-							+ 	"<dt class='col-sm-7'>Conditions</dd>"
-							+ "<dd class='col-sm-3'>" + currConditions + "</dd>"
+							+ 	"<dt class='col-sm-7'>Current Temperature</dt> <br>"
+							+   "<dd class='col-sm-5'>" + currTemp +"\u00B0 F </dd> <br><br>"
+							+	"<dt class='col-sm-7'>Current Weather</dt> <br>"  
+							+   "<dd class='col-sm-5'>" + currSummary +"</dd> <br><br>"
+							+ 	"<dt class='col-sm-7'>Conditions</dd> <br>"
+							+ "<dd class='col-sm-5'>" + currConditions + "</dd>"
 							+ '</dl>'
 							+ '</div>').addTo(mymap);
 		})
