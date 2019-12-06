@@ -17,7 +17,7 @@
    	integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
        crossorigin=""></script>
     <script src="mapScripts.js"></script>
-    <script type="text/javascript" src=".keys.js"></script>
+    <script type="text/javascript" src="keys.js"></script>
     <script>
         
         Object.size = function(obj) {
@@ -51,15 +51,42 @@
         });
 
 
-        describe('Get Icons Array', () => {
-            it('Does the array of icons have 8 objects', () => {
+        describe('Checking latitude and longitude inputs', () => {
+            it('Latitude and Longitude out of bounds', () => {
                 // act
                 var lat = 0;
                 var long = 0;
                 const result = loadData(lat, long);
                 console.log(result);
                 // assert
-                expect(Object.size(result)).toBe("Invalid Latitude and longitude");
+                expect(Object.size(result)).toBe(0);
+            })
+            it('Longitude out of bounds', () => {
+                // act
+                var lat = 40;
+                var long = 0;
+                const result = loadData(lat, long);
+                console.log(result);
+                // assert
+                expect(Object.size(result)).toBe(0);
+            })
+            it('Latitude out of bounds', () => {
+                // act
+                var lat = 0;
+                var long = 104;
+                const result = loadData(lat, long);
+                console.log(result);
+                // assert
+                expect(Object.size(result)).toBe(0);
+            })
+            it('In bounds', () => {
+                // act
+                var lat = 40;
+                var long = 104;
+                const result = loadData(lat, long);
+                console.log(result);
+                // assert
+                expect(Object.size(result)).toBe(0);
             })
         });
 
