@@ -31,26 +31,37 @@ const mail_from = mail.createTransport({
   }
 });
 
-var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
-db.query(check_subscribers)
-	.then(function(info) {
-		var mailing_list = '';
-		for(i = 0; i < info.length; i++){ // formats string with all emails that are subscribed
-			if(info[i].subscribe === true){
-				if(mailing_list.length != 0){
-					mailing_list += ', ';
+function sendEmail(){
+	var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
+	console.log("called");
+	db.query(check_subscribers)
+		.then(function(info) {
+			var mailing_list = '';
+			for(i = 0; i < info.length; i++){ // formats string with all emails that are subscribed
+				if(info[i].subscribe === true){
+					if(mailing_list.length != 0){
+						mailing_list += ', ';
+					}
+					mailing_list += info[i].email;
 				}
-				mailing_list += info[i].email;
 			}
-		}
-		var message = { // composition of the email
-		  from: 'thedisastertracker@gmail.com',
-		  to: mailing_list,
-		  subject: 'If this works, hurrah',
-		  text: 'cool weather stuff'
-		};
+			var message = { // composition of the email
+			  from: 'thedisastertracker@gmail.com',
+			  to: mailing_list,
+			  subject: 'If this works, hurrah',
+			  text: 'cool weather stuff'
+			};
 
-	})
+			mail_from.sendMail(message, function(error, info){
+				if (error) {
+					console.log(error);
+				} else {
+					console.log('email sent: ' + info.response);
+				}
+			});
+
+		})
+}
 
 
 app.set('view engine', 'pug');
@@ -193,3 +204,6 @@ app.post('/home/user_loc', function(req, res) {
 });
 
 app.listen(process.env.PORT || 8000); // listens on heroku's port or port 8000
+
+sendEmail();
+setInterval(sendEmail, 604800000);
