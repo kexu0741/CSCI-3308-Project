@@ -138,7 +138,7 @@ function makeMap(urls, lats, longs, icons, cities){
 					currIcon = icons[1];
 				}
 			}
-			else if(currWeather.includes('cloudy')){
+			else if(currWeather.includes('cloudy') || currWeather.includes('fog')){
 				currIcon = icons[2];
 			}
 			else if(currWeather.includes('rain')){
@@ -190,9 +190,14 @@ function addMarker(key){
 	var icons = getIcons(); //get icons for map
 	var url = lat +","+ lng;
 	url = apiUrl+url;
-	//get map data and pass it so a pin can be made
-	$.ajax({url:url, dataType:"jsonp"}).then(function(data) { 
-		city = lat + ", " + lng;
-		makeMap(data, lat, lng, icons, city);
-	})
+
+	var latParam = parseInt(lat);
+	var lngParam = parseInt(lng);
+
+	if ((latParam > 37 && latParam < 41) && (lngParam > -109.03 && lngParam < -102.03)){
+		makeMap([url], [latParam], [lngParam], icons, ["User Coordinates"]);
+	}
+	else{
+		alert('error: invalid coordinates');
+	}
 }
