@@ -69,7 +69,6 @@ function loadData(lat, long, locations){
 	//apiUrl FIELD HERE> ENTER YOUR API URL IN KEY.JS FILE.
 	///************************************************************** */
 	//var url = null;
-	console.log(locations);
 	var apiUrl = darkSkyAPIUrl;
 	if (apiUrl == null){
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
@@ -109,11 +108,9 @@ function makeMap(data, lat, long, icons, city){
 	// iconSize: size of icon image on map
 	// icon anchor: where on the icon which corresponds to icon location
 	// todo: fix the icons covering the city names
-
-
 	var currIcon; // var storing the current icon
 	var currWeather = data.currently.icon; // var storing the current weather conditions
-
+	
 	// matching the current weather to the respective icon
 	if(currWeather.includes('clear')){
 		if(currWeather.includes('day')){
@@ -129,10 +126,12 @@ function makeMap(data, lat, long, icons, city){
 	else if(currWeather.includes('rain')){
 		currIcon = icons[3];
 	}
-	else if(currWeahter.includes('storm')){
+	else if(currWeather.includes('storm')){
 		currIcon = icons[5];
 	}
-
+	else{
+		currIcon = icons[0];
+	}
 	//making marker update based on lat/lng inputs
 	var marker1 = L.marker([lat,long], {icon: currIcon}).addTo(mymap);
 	var locName = city;

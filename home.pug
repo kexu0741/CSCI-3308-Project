@@ -24,6 +24,10 @@ head
   - else
     - var userLocations = []
   - var directory = __dirname
+  
+  - if(nullLoc)
+    script.
+      window.alert('Location does not exist')
   style.
     #map {
     position: absolute;

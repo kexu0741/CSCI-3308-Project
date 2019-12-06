@@ -91,12 +91,25 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
 	db.query(query) // searches DB
 		.then(function(info) {
-			res.render(__dirname + "/home",{
-				my_title:"Home",
-				data:info[0], // contains the results of the search
-				locationName: info[0].location_name
+			if (!info || !info[0]){
+				res.render(__dirname + "/home",{
+					my_title:"Home",
+					nullLoc: true
+				});
+			}
+			else{
+				console.log(info);
+				res.render(__dirname + "/home",{
+					my_title:"Home",
+					data:info[0], // contains the results of the search
+					locationName: info[0].location_name
+				})
+			}
 		})
-	})
+		.catch((err, res) => {
+			console.log(err);
+			res.send(204);
+		})
 })
 
 app.get('/userprofile', function(req, res) { // renders userprofile page
