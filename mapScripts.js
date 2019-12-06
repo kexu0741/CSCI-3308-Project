@@ -203,9 +203,11 @@ function makeMap(urls, lats, longs, icons, cities){
 							+ '</dl>'
 							+ '</div>').addTo(mymap);
 			markers.push(marker1);
+			console.log(markers); // markers does not seem to be updating with the new markers
+														// it always has size 0
 		})
 	}
-	// for (i = 0; i < markers.length; i++){
+	// for (i = 0; i < markers.length; i++){ // add all stored markers to map
 	// 	markers[i].addTo(mymap);
 	// }
 }
