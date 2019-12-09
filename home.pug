@@ -41,6 +41,10 @@ head
       - locs[i] = tempLoc // populates location name array with pulled location name
     - }
 
+  - if(nullLoc)
+    script.
+      window.alert('Location does not exist in our database');
+
   style.
     #map {
     position: absolute;
@@ -56,7 +60,10 @@ head
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
   a.navbar-brand(href='#') RAD Weather
   button.btn.btn-outline-success.my-2.my-sm-0(style='position: absolute; right: 0;')
-    a(href='../userprofile') Login
+    a(href='../userprofile') Register
+  br
+  button.btn.btn-outline-success.my-2.my-sm-0
+    a(href='../login') Login
 #map
 div
   container
@@ -68,13 +75,17 @@ div
         locations = [!{locs}]; // interprets the location names as javascript strings
 
         //calls function handling locations passed from database
-        window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}"); 
+        if (locations.length > 0){
+        	window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}"); 
+        }
 div
   container
     form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 10%;')
       label(for='latitudeInput') Latitude
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Latitude')
+        
       label(for='longitudeInput') Longitude
+      
       input#longitudeInput.form-control(type='integer' placeholder='Longitude')
       button#setLatLng.btn.btn-primary(type='button' onclick='handleCoords();return false;' style='margin-top: 2%;') Search
     script.

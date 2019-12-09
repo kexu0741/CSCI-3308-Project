@@ -11,7 +11,6 @@ const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-globalVariable = {};
 
 
 // setting up dbconfig for heroku
@@ -33,7 +32,6 @@ const mail_from = mail.createTransport({
 
 function sendEmail(){
 	var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
-	console.log("called");
 	db.query(check_subscribers)
 		.then(function(info) {
 			var mailing_list = '';
@@ -103,20 +101,20 @@ app.get('/home', function(req, res) { // renders homepage
 		})
 });
 
-app.get('/home/search', function(req, res) { // renders homepage with search query
-	var searchTerm = req.query.search;
-	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
-	db.query(query) // searches DB
-		.then(function(info) {
-			console.log("info: " + info[0].location_name);
-			res.render(__dirname + "/home",{
-				my_title:"Home",
-				api_key: process.env.kevinAPIkey,
-				data:info, // contains the results of the search
-				user_locations: JSON.stringify(info[0].location_name)
-			});
-		})
-})	
+// app.get('/home/search', function(req, res) { // renders homepage with search query
+// 	var searchTerm = req.query.search;
+// 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
+// 	db.query(query) // searches DB
+// 		.then(function(info) {
+// 			console.log("info: " + info[0].location_name);
+// 			res.render(__dirname + "/home",{
+// 				my_title:"Home",
+// 				api_key: process.env.kevinAPIkey,
+// 				data:info, // contains the results of the search
+// 				user_locations: JSON.stringify(info[0].location_name)
+// 			});
+// 		})
+// })	
 
 app.get('/', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
@@ -128,6 +126,33 @@ app.get('/', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
 		my_title:"Home"
 	});
+});
+
+app.get('/home/search', function(req, res) { // renders homepage with search query
+	var searchTerm = req.query.search.replace("+", " ");
+	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
+	db.query(query) // searches DB
+		.then(function(info) {
+			if (!info || !info[0]){
+				res.render(__dirname + "/home",{
+					my_title:"Home",
+					nullLoc: true
+				});
+			}
+			else{
+				console.log(info);
+				res.render(__dirname + "/home",{
+					my_title:"Home",
+					api_key: process.env.kevinAPIkey,
+					data:info, // contains the results of the search
+ 					user_locations: JSON.stringify(info[0].location_name)
+				})
+			}
+		})
+		.catch((err, res) => {
+			console.log(err);
+			res.send(204);
+		})
 });
 
 app.get('/userprofile', function(req, res) { // renders userprofile page
@@ -179,19 +204,10 @@ app.post('/home/user_loc', function(req, res) {
 				}
 				db.query(get_coords)
 					.then(function(info) {
-						var loc_info = new Array(50);
-						for (i = 0; i < loc_info.length; i++){
-							loc_info[i] = new Array(3);
-						}
-						for (i = 0; i < info.length; i++){
-							loc_info[i][0] = info[i].location_name;
-							loc_info[i][1] = info[i].ns_coordinate;
-							loc_info[i][2] = info[i].ew_coordinate;
-						}
-						console.log(loc_info);
-						res.render(__dirname + '/home',{
-							user_locations: loc_info
-						});
+						console.log(info);
+							res.render(__dirname + '/home',{
+								user_locations: JSON.stringify(info)
+							})
 					})
 			}
 			else{
