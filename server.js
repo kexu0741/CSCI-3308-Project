@@ -99,7 +99,6 @@ app.get('/home', function(req, res) { // renders homepage
 				api_key: process.env.kevinAPIkey,
 				data: info,
 				multiLocs: info
-				// user_locations: info
 			});
 		})
 });

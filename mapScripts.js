@@ -1,13 +1,15 @@
-if(window.location.pathname == '/'){
+// redirects to the /home page on initial load
+if(window.location.pathname == '/'){ 
 	window.location.pathname = '/home';
 }
 
+//getIcons function: loads icon images from img folder into array and returns array to caller
+//getIcons takes no arguments
 function getIcons(){
 	// different icons for the different weather types
 	// iconurl: path to icon image
 	// iconSize: size of icon image on map
 	// icon anchor: where on the icon which corresponds to icon location
-
 	var icons = [];
 
 	icons[0] = L.icon({
@@ -24,7 +26,7 @@ function getIcons(){
 		iconAnchor: [15,30]
 	});
 
-	icons[2] = L.icon({ // TODO: find new image
+	icons[2] = L.icon({ 
 		iconUrl:'../img/cloudy.png',
 
 		iconSize: [30, 30],
@@ -38,7 +40,7 @@ function getIcons(){
 		iconAnchor: [15, 30]
 	});
 
-	icons[4] = L.icon({ // TODO: find new image
+	icons[4] = L.icon({ 
 		iconUrl:'../img/snow.png',
 
 		iconSize: [30, 30],
@@ -52,7 +54,7 @@ function getIcons(){
 		iconAnchor: [15, 28]
 	});
 
-	icons[6] = L.icon({ // TODO: find new image
+	icons[6] = L.icon({ 
 		iconUrl:'../img/alert.png',
 
 		iconSize: [30, 30],

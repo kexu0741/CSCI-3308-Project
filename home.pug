@@ -11,21 +11,20 @@ head
 
   script(src="../mapScripts.js" )
 
-  - if(data)
-    // - var ns_coordinate = data.ns_coordinate
-    // - var ew_coordinate = data.ew_coordinate
-    - var ns_coordinates = []
-    - var ew_coordinates = []
-    - let locations = []
+  - if(data) 
+    - var ns_coordinates = [] // initializes array to hold the latitude coordinates of each point pulled from database
+    - var ew_coordinates = [] // initializes array to hold the longitude coordinates of each point pulled from the database
+    - let locations = [] // initializes array to hold the location names of each point pulled from the database
 
-    - for(let i = 0; i < data.length; i++) {
-      - ns_coordinates[i] = data[i].ns_coordinate
-      - ew_coordinates[i] = data[i].ew_coordinate
+    // iterates though query results and populates coordinate arrays
+    - for(let i = 0; i < data.length; i++) { 
+      - ns_coordinates[i] = data[i].ns_coordinate // populates latitude coordinates from query
+      - ew_coordinates[i] = data[i].ew_coordinate // populates longitude coordinates from query
     - }
   - else
-    - var ns_coordinate = 0.0
-    - var ew_coordinate = 0.0 
-    - var locations = []
+    - var ns_coordinate = 0.0 // default value for latitude
+    - var ew_coordinate = 0.0 // default value for longitude
+    - var locations = [] // default (empty) value for locations array
   
   - if(user_locations)
     - var temp = user_locations
@@ -33,11 +32,13 @@ head
   - else
     - var locations = []
 
-  - if(multiLocs)
-    - var locs = []
+  // handles when multiple locations are queried, and multiple location names need to be pulled
+  - if(multiLocs) 
+    - var locs = [] // initializes array to hold location names of each point pulled from the database
+    // iterates through query results and populates location name array
     - for(let i = 0; i < multiLocs.length; i++){
-      - var tempLoc = JSON.stringify(multiLocs[i].location_name);
-      - locs[i] = tempLoc
+      - var tempLoc = JSON.stringify(multiLocs[i].location_name); // pulls location name and turns it into a string
+      - locs[i] = tempLoc // populates location name array with pulled location name
     - }
 
   style.
@@ -63,9 +64,11 @@ div
       input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
       script.
-        let locations = [];
-        locations = [!{locs}];
-        window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}");
+        let locations = []; // initializes temporary array for passing the location names as a parameter
+        locations = [!{locs}]; // interprets the location names as javascript strings
+
+        //calls function handling locations passed from database
+        window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}"); 
 div
   container
     form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 10%;')
@@ -76,7 +79,7 @@ div
       button#setLatLng.btn.btn-primary(type='button' onclick='handleCoords();return false;' style='margin-top: 2%;') Search
     script.
         function handleCoords(){
-      		addMarker("#{api_key}");
+      		addMarker("#{api_key}"); // calls the seperate function for coordinates
       	}
 
 s
