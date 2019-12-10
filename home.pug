@@ -41,9 +41,9 @@ head
       - locs[i] = tempLoc // populates location name array with pulled location name
     - }
 
-  - if(nullLoc)
+  - if(nullLoc) // handles when location is not found in the database
     script.
-      window.alert('Location does not exist in our database');
+      window.alert('Location does not exist in our database'); 
 
   style.
     #map {
@@ -74,9 +74,14 @@ div
         let locations = []; // initializes temporary array for passing the location names as a parameter
         locations = [!{locs}]; // interprets the location names as javascript strings
 
-        //calls function handling locations passed from database
-        if (locations.length > 0){
+
+        if (locations.length > 0){ // ensures location/locations were found in database
+        	//calls function handling locations passed from database
         	window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}"); 
+        }
+        else {
+        	// if locations were not in database, then this redirects back to homepage
+        	window.location.pathname = '/home';
         }
 div
   container
