@@ -10,7 +10,8 @@ function getIcons(){
 	// iconurl: path to icon image
 	// iconSize: size of icon image on map
 	// icon anchor: where on the icon which corresponds to icon location
-	var icons = [];
+
+	var icons = []; // initializes array storing each icon image
 
 	icons[0] = L.icon({
 		iconUrl:'../img/sunny.png',
@@ -61,36 +62,34 @@ function getIcons(){
 		iconAnchor: [22, 40]
 	});
 
-	icons[7] = L.icon({ //
+	icons[7] = L.icon({ 
 		iconUrl:'../img/redalert.png',
 
 		iconSize: [20, 20],
 		iconAnchor: [10, 5]
 	});
-	return icons;
+
+	return icons; // returns array to caller
 }
 
+
+//loadData function: loads and stores parameters passed from database/homepage
 function loadData(lats, longs, locations, apiUrl){
-	if (apiUrl == null){
+	if (apiUrl == null){ // checks if api key is passed to program
 		alert("Make a .key.js file and enter your darkSkys API url into a variable called darkSkyAPIUrl. url must end in a backslash (/)");
 	}
 
-	var icons = getIcons();
+	var icons = getIcons(); // initializes icons array
 
-	if (lats[0] + longs[0] == 362){
-		console.log('apiUrl');
-		addMarker(apiUrl);
+	var urls = []; // initializes array storing darksky api urls for each location passed in
+	for(var i = 0; i < lats.length; i++){ // creates api url for each lat/long passed in
+		// formatting url
+		var url = lats[i] + "," + longs[i];
+		url = apiUrl+url;
+		urls[i] = url; // adds url to array
 	}
-	else{
-		var icons = getIcons();
-		var urls = [];
-		for(var i = 0; i < lats.length; i++){ //creates api url for each lat/long passed in
-			var url = lats[i] + "," + longs[i];
-			url = apiUrl+url;
-			urls[i] = url;
-		}
-		makeMap(urls, lats, longs, icons, locations);
-	}
+	makeMap(urls, lats, longs, icons, locations);
+
 }
 
 
@@ -105,7 +104,7 @@ function makeMap(urls, lats, longs, icons, cities){
 	L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=v3Mu9999pyuOUuraMgce', {
 		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
 	}).addTo(mymap);
-	mymap.setMaxBounds([[36.7094, -110.3259],[42.0595, -101.6997]])// //mymap.setMaxBounds(mymap.getBounds()); // <-- alternatively, sets bounds to the frame the map opens up in
+	mymap.setMaxBounds([[36.7094, -110.3259],[42.0595, -101.6997]]);
 
 	for(let i = 0; i < urls.length; i++){
 		let lat = lats[i];
@@ -179,7 +178,7 @@ function getCurrConditions(data, input){
 	input.push(data.daily.summary);
 }
 
-//addMarker adds a marker to the map nbased on latatude and longitude
+//addMarker adds a marker to the map based on latatude and longitude
 function addMarker(key){
 	var container = L.DomUtil.get('map'); //get map comtainer
 	if(container != null){ 

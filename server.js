@@ -140,7 +140,6 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 				});
 			}
 			else{
-				console.log(info);
 				res.render(__dirname + "/home",{
 					my_title:"Home",
 					api_key: process.env.kevinAPIkey,
