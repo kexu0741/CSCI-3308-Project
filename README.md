@@ -1,5 +1,5 @@
 # CSCI-3308-Project
-RAD Weather
+RAD Weather- 
 A ColoRADo weather tracking web application featuring realtime weather data and interactivity, catered to Coloradoans and visitors of Colorado.
 
 ## Repo Organization/Structure
