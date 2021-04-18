@@ -8,26 +8,43 @@ head
   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
   link(rel='stylesheet' href='https://unpkg.com/leaflet@1.5.1/dist/leaflet.css' integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==' crossorigin='')
   script(src='https://unpkg.com/leaflet@1.5.1/dist/leaflet.js' integrity='sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==' crossorigin='')
-  script(src="../keys.js")
+
   script(src="../mapScripts.js" )
-  - if(data)
-    - var ns_coordinate = data.ns_coordinate
-    - var ew_coordinate = data.ew_coordinate
+
+  - if(data) 
+    - var ns_coordinates = [] // initializes array to hold the latitude coordinates of each point pulled from database
+    - var ew_coordinates = [] // initializes array to hold the longitude coordinates of each point pulled from the database
+    - let locations = [] // initializes array to hold the location names of each point pulled from the database
+
+    // iterates though query results and populates coordinate arrays
+    - for(let i = 0; i < data.length; i++) { 
+      - ns_coordinates[i] = data[i].ns_coordinate // populates latitude coordinates from query
+      - ew_coordinates[i] = data[i].ew_coordinate // populates longitude coordinates from query
+    - }
   - else
-    - var ns_coordinate = 0.0
-    - var ew_coordinate = 0.0
+    - var ns_coordinate = 0.0 // default value for latitude
+    - var ew_coordinate = 0.0 // default value for longitude
+    - var locations = [] // default (empty) value for locations array
   
   - if(user_locations)
-    //- - var userLocations = []
-    //- - for (i = 0; i < #{user_locations}.length; i++)
-      - userLocations[i] = #
+    - var temp = user_locations
+    - var locs = temp
   - else
-    - var userLocations = []
-  - var directory = __dirname
-  
-  - if(nullLoc)
+    - var locations = []
+
+  // handles when multiple locations are queried, and multiple location names need to be pulled
+  - if(multiLocs) 
+    - var locs = [] // initializes array to hold location names of each point pulled from the database
+    // iterates through query results and populates location name array
+    - for(let i = 0; i < multiLocs.length; i++){
+      - var tempLoc = JSON.stringify(multiLocs[i].location_name); // pulls location name and turns it into a string
+      - locs[i] = tempLoc // populates location name array with pulled location name
+    - }
+
+  - if(nullLoc) // handles when location is not found in the database
     script.
-      window.alert('Location does not exist in our database')
+      window.alert('Location does not exist in our database'); 
+
   style.
     #map {
     position: absolute;
@@ -35,6 +52,7 @@ head
     height:100%;
     border: 1px solid black;
     }
+
     #sideBar{
     width: 20%;
     }
@@ -53,17 +71,31 @@ div
       input.form-control.mr-sm-2(name='search' type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
       script.
-        window.onload = loadData(#{ns_coordinate}, #{ew_coordinate}, !{user_locations});
+        let locations = []; // initializes temporary array for passing the location names as a parameter
+        locations = [!{locs}]; // interprets the location names as javascript strings
+
+
+        if (locations.length > 0){ // ensures location/locations were found in database
+        	//calls function handling locations passed from database
+        	window.onload = loadData([#{ns_coordinates}], [#{ew_coordinates}], locations, "#{api_key}"); 
+        }
+        else {
+        	// if locations were not in database, then this redirects back to homepage
+        	window.location.pathname = '/home';
+        }
 div
   container
-    form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 3%;')
+    form#sideBar.form-group(style='position: absolute; right: 0; margin-top: 10%;')
       label(for='latitudeInput') Latitude
       input#latitudeInput.form-control(type='integer' aria-describedby='emailHelp' placeholder='Latitude')
         
       label(for='longitudeInput') Longitude
       
       input#longitudeInput.form-control(type='integer' placeholder='Longitude')
-      //loadData is passed 181,181 as no lat,lng combo will ever reach these numbers
-      button#setLatLng.btn.btn-primary(type='button' onclick='loadData(181,181);return false;' style='margin-top: 2%;') Search
+      button#setLatLng.btn.btn-primary(type='button' onclick='handleCoords();return false;' style='margin-top: 2%;') Search
+    script.
+        function handleCoords(){
+      		addMarker("#{api_key}"); // calls the seperate function for coordinates
+      	}
 
 s

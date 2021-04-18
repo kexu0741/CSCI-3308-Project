@@ -36,7 +36,7 @@ const dbConfig = new Pool({
 	port: 5432,
 	database: 'disaster_tracker', // name of db
 	user: 'postgres',
-	password: 'M1ndB4Mouth' // postgres password (your password here)
+	password: "" // postgres password (your password here)
 })
 
 /*
@@ -54,12 +54,3 @@ dbConfig.query(create_locations,(err,res)=>{
 dbConfig.query(create_users,(err,res)=>{
   console.log(err,res)
 })
-
-// dbConfig.query(insert_statement,(err,res)=>{
-//     console.log(err,res)
-//   })
-
-// dbConfig.query("SELECT * FROM locations WHERE ns_coordinate > 40.0;",(err,res)=>{
-//   console.log(err,res)
-//   dbConfig.end()
-// })

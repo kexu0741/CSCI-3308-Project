@@ -23,3 +23,4 @@ INSERT INTO locations(location_name, ns_coordinate, ew_coordinate) VALUES('Sanfo
 
 
 ALTER TABLE users ADD COLUMN subscribe BOOLEAN DEFAULT false;
+

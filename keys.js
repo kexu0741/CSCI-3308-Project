@@ -1,0 +1,1 @@
+var darkSkyAPIUrl = "https://api.darksky.net/forecast/acfdf25e821b0542f3249842fec4bfea/";

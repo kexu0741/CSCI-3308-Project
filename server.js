@@ -4,23 +4,23 @@
 */
 
 const express = require('express');
-//const pass = require(__dirname + '/dbPassword');
 const mail = require('nodemailer');
+
 let app = express();
 const pgp = require('pg-promise')();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+// setting up dbconfig for heroku
 const dbConfig = {
-	host: 'localhost',
-	port: 5432,
-	database: 'disaster_tracker',
-	user: 'postgres',
-	password: "" // when testing, remember to change this to your password and remove before commit
+	connectionString: process.env.DATABASE_URL,
+	ssl: true,
 };
 
-let db = pgp(dbConfig);
+var db = pgp(dbConfig);
+
 
 const mail_from = mail.createTransport({
   service: 'gmail',
@@ -30,48 +30,91 @@ const mail_from = mail.createTransport({
   }
 });
 
-var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
-db.query(check_subscribers)
-	.then(function(info) {
-		var mailing_list = '';
-		for(i = 0; i < info.length; i++){ // formats string with all emails that are subscribed
-			if(info[i].subscribe === true){
-				if(mailing_list.length != 0){
-					mailing_list += ', ';
+function sendEmail(){
+	var check_subscribers = "SELECT email,subscribe FROM users;"; // get all users to check if subscribed
+	db.query(check_subscribers)
+		.then(function(info) {
+			var mailing_list = '';
+			for(i = 0; i < info.length; i++){ // formats string with all emails that are subscribed
+				if(info[i].subscribe === true){
+					if(mailing_list.length != 0){
+						mailing_list += ', ';
+					}
+					mailing_list += info[i].email;
 				}
-				mailing_list += info[i].email;
 			}
-		}
-		var message = { // composition of the email
-		  from: 'thedisastertracker@gmail.com',
-		  to: mailing_list,
-		  subject: 'If this works, hurrah',
-		  text: 'cool weather stuff'
-		};
+			var message = { // composition of the email
+			  from: 'thedisastertracker@gmail.com',
+			  to: mailing_list,
+			  subject: 'Weather info for today',
+			  text: 'Highlands Ranch: 52 F'
+			};
 
-		// mail_from.sendMail(message, function(error, info){ // sends email
-		//   if (error) {
-		//     console.log(error);
-		//   } else {
-		//     console.log('Email sent: ' + info.response);
-		//   }
-		// });
-	})
+			mail_from.sendMail(message, function(error, info){
+				if (error) {
+					console.log(error);
+				} else {
+					console.log('email sent: ' + info.response);
+				}
+			});
+
+		})
+}
+
 
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
 app.get('/home', function(req, res) { // renders homepage
-	var query = "SELECT * FROM locations;";
+	// querying data for the top 18 most populated cities in Colorado as default values
+	var query = "SELECT * FROM locations WHERE location_name = 'Boulder' OR location_name = 'Denver' "
+	+ "OR location_name = 'Colorado Springs' "
+	+ "OR location_name = 'Aurora' "
+	+ "OR location_name = 'Steamboat Springs'"
+	+ "OR location_name = 'Loveland'"
+	+ "OR location_name = 'Estes Park'"
+	+ "OR location_name = 'Idaho Springs'" 
+	+ "OR location_name = 'Fort Collins' "
+	+ "OR location_name = 'Pueblo' "
+	+ "OR location_name = 'Fort Morgan'"
+	+ "OR location_name = 'Limon'"
+	+ "OR location_name = 'Glenwood Springs'"
+	+ "OR location_name = 'Lakewood' "
+	+ "OR location_name = 'Thornton' "
+	+ "OR location_name = 'Arvada' " 
+	+ "OR location_name = 'Westminster' " 
+	+ "OR location_name = 'Centennial' "
+	+ "OR location_name = 'Highlands Ranch' "
+	+ "OR location_name = 'Greeley' "
+	+ "OR location_name = 'Longmont' "
+	+ "OR location_name = 'Loveland' " 
+	+ "OR location_name = 'Broomfield' "
+	+ "OR location_name = 'Grand Junction';";
 	db.query(query)
-		.then(function(info) {
+		.then(function(info){
 			res.render(__dirname + "/home",{
-				my_title: "Home",
-				allLocations: info
+				my_title:"Home",
+				api_key: process.env.kevinAPIkey,
+				data: info,
+				multiLocs: info
 			});
 		})
-
 });
+
+// app.get('/home/search', function(req, res) { // renders homepage with search query
+// 	var searchTerm = req.query.search;
+// 	var query = "SELECT * FROM locations WHERE location_name = '" + searchTerm + "';";
+// 	db.query(query) // searches DB
+// 		.then(function(info) {
+// 			console.log("info: " + info[0].location_name);
+// 			res.render(__dirname + "/home",{
+// 				my_title:"Home",
+// 				api_key: process.env.kevinAPIkey,
+// 				data:info, // contains the results of the search
+// 				user_locations: JSON.stringify(info[0].location_name)
+// 			});
+// 		})
+// })	
 
 app.get('/', function(req, res) { // renders homepage
 	res.render(__dirname + "/home",{
@@ -97,11 +140,11 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 				});
 			}
 			else{
-				console.log(info);
 				res.render(__dirname + "/home",{
 					my_title:"Home",
-					data:info[0], // contains the results of the search
-					locationName: info[0].location_name
+					api_key: process.env.kevinAPIkey,
+					data:info, // contains the results of the search
+ 					user_locations: JSON.stringify(info[0].location_name)
 				})
 			}
 		})
@@ -109,7 +152,7 @@ app.get('/home/search', function(req, res) { // renders homepage with search que
 			console.log(err);
 			res.send(204);
 		})
-})
+});
 
 app.get('/userprofile', function(req, res) { // renders userprofile page
 	res.render(__dirname + "/userprofile",{
@@ -172,8 +215,9 @@ app.post('/home/user_loc', function(req, res) {
 				});
 			}
 		})
-})
+});
 
-console.log("Welcome to port 3000");
+app.listen(process.env.PORT || 8000); // listens on heroku's port or port 8000
 
-app.listen('3000');
+sendEmail();
+setInterval(sendEmail, 604800000);
